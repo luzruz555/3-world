@@ -9,173 +9,248 @@ const CONFIG = {
   siteTitle: "III",
   siteSubtitle: "DON'T LOSE YOURSELF",
   
-  // 캐릭터 데이터 (9명) - 자유롭게 수정
+  // 이미지 베이스 경로
+  imageBasePath: "/img/",
+  
+  // 캐릭터 데이터 (9명)
   characters: [
     {
       id: "char-01",
-      name: "???",
-      codename: "PRISONER_01",
-      image: "", // ← 이미지 경로
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???", // 죄목
+      name: "지목자",
+      codename: "SELECTOR",
+      image: "P1",
+      concept: "「지목 / 선택」",
+      description: "손가락으로 가리킨 대상에게 효과를 부여하는 능력자. 그의 선택은 곧 심판이다. 버뮤다에서 가장 냉정한 처형자로 알려져 있으며, 감정 없이 표적을 지목한다.",
+      crime: "심판",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "표식", desc: "대상 위치 표시 (10초)" },
+        { stage: 3, name: "속박", desc: "대상 3초간 강제 정지" },
+        { stage: 1, name: "선고", desc: "지목한 대상에게 누적 데미지 폭발" },
       ],
-      quote: "\"...\""
+      stats: { power: 8, speed: 5, range: 9, technique: 7, mental: 6 },
+      quote: "\"네가 선택된 거야. 거부권 따윈 없어.\""
     },
     {
       id: "char-02",
-      name: "???",
-      codename: "PRISONER_02",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "연출가",
+      codename: "DIRECTOR",
+      image: "P2",
+      concept: "「무대 / 각본」",
+      description: "일정 범위를 '극장'으로 선언하고 그 안에서 규칙을 강제하는 능력자. 모든 것을 자신의 시나리오대로 움직이려 하며, 예상치 못한 변수를 극도로 혐오한다.",
+      crime: "조작",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "무대설치", desc: "영역 내 발소리/기척 증폭" },
+        { stage: 3, name: "독백", desc: "강제 독백 (거짓말 불가)" },
+        { stage: 1, name: "커튼콜", desc: "영역 내 모든 것을 30초 전으로 되돌림" },
       ],
-      quote: "\"...\""
+      stats: { power: 5, speed: 4, range: 8, technique: 10, mental: 8 },
+      quote: "\"이 무대의 주인공은 나야. 넌 그저 엑스트라.\""
     },
     {
       id: "char-03",
-      name: "???",
-      codename: "PRISONER_03",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "거울",
+      codename: "MIRROR",
+      image: "P3",
+      concept: "「반사 / 모방」",
+      description: "상대의 능력을 복제하거나 공격을 되돌리는 능력자. 자신만의 정체성이 없다는 콤플렉스를 가지고 있으며, 타인의 것을 빼앗는 데서 쾌감을 느낀다.",
+      crime: "사칭",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "잔상", desc: "마지막으로 본 능력의 형태만 복제" },
+        { stage: 3, name: "반사", desc: "받은 공격을 50% 위력으로 반사" },
+        { stage: 1, name: "완전모방", desc: "상대 능력을 100% 복제하여 사용" },
       ],
-      quote: "\"...\""
+      stats: { power: 7, speed: 6, range: 5, technique: 9, mental: 4 },
+      quote: "\"네 능력, 꽤 마음에 드는데?\""
     },
     {
       id: "char-04",
-      name: "???",
-      codename: "PRISONER_04",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "도박사",
+      codename: "GAMBLER",
+      image: "P4",
+      concept: "「확률 / 운」",
+      description: "확률을 조작하고 운에 기반한 능력을 사용하는 능력자. 삶 자체를 도박으로 여기며, 불확실성 속에서만 살아있음을 느낀다. 예측 가능한 것을 지루해한다.",
+      crime: "사기",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "동전던지기", desc: "앞면 회복, 뒷면 데미지" },
+        { stage: 3, name: "확률조작", desc: "상대의 다음 공격 명중률 50%로 고정" },
+        { stage: 1, name: "올인", desc: "주사위 판정, 성공 시 즉사급 데미지" },
       ],
-      quote: "\"...\""
+      stats: { power: 6, speed: 5, range: 6, technique: 7, mental: 9 },
+      quote: "\"운도 실력이야. 난 그걸 증명하지.\""
     },
     {
       id: "char-05",
-      name: "???",
-      codename: "PRISONER_05",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "인형사",
+      codename: "PUPPETEER",
+      image: "P5",
+      concept: "「실 / 조종」",
+      description: "보이지 않는 실로 대상을 조종하는 능력자. 사람을 도구로 보는 차가운 시선의 소유자. 누군가의 자유를 빼앗는 순간 희열을 느끼며, 자신도 누군가에게 조종당한 과거가 있다.",
+      crime: "착취",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "조작", desc: "작은 물체 조종 (무기, 파편 등)" },
+        { stage: 3, name: "간섭", desc: "인체 일부 강제 조종 (한쪽 팔, 다리)" },
+        { stage: 1, name: "꼭두각시", desc: "상대 신체 완전 조종 (10초)" },
       ],
-      quote: "\"...\""
+      stats: { power: 7, speed: 4, range: 7, technique: 10, mental: 5 },
+      quote: "\"춤춰봐. 내가 끈을 놓을 때까지.\""
     },
     {
       id: "char-06",
-      name: "???",
-      codename: "PRISONER_06",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "망각자",
+      codename: "AMNESIAC",
+      image: "P6",
+      concept: "「기억 / 소거」",
+      description: "대상의 기억을 지우거나 조작하는 능력자. 자신의 과거 기억도 불완전하며, 자신이 왜 '죄수'가 되었는지조차 기억하지 못한다. 조용하고 공허한 눈을 가졌다.",
+      crime: "은폐",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "희석", desc: "자신의 존재감 희석 (눈에 잘 안 띔)" },
+        { stage: 3, name: "삭제", desc: "최근 30초 기억 삭제" },
+        { stage: 1, name: "백지화", desc: "대상의 능력 사용법 기억 일시 삭제" },
       ],
-      quote: "\"...\""
+      stats: { power: 4, speed: 6, range: 5, technique: 8, mental: 3 },
+      quote: "\"네가 뭘 하려 했는지... 기억나?\""
     },
     {
       id: "char-07",
-      name: "???",
-      codename: "PRISONER_07",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "계약자",
+      codename: "CONTRACTOR",
+      image: "P7",
+      concept: "「약속 / 구속」",
+      description: "상대와 '계약'을 맺어 조건부 효과를 발동시키는 능력자. 규칙과 약속을 신성시하며, 한 번 맺은 계약은 반드시 지켜져야 한다고 믿는다. 아이러니하게도 그의 죄목은 배신이다.",
+      crime: "배신",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "제안", desc: "계약 제안 - 거부 시 위치 노출" },
+        { stage: 3, name: "구속", desc: "계약 위반 시 자동 데미지" },
+        { stage: 1, name: "혈인", desc: "위반 시 코인 1개 강제 소모되는 절대 계약" },
       ],
-      quote: "\"...\""
+      stats: { power: 5, speed: 5, range: 6, technique: 9, mental: 8 },
+      quote: "\"계약은 지켜야지. 그게 규칙이니까.\""
     },
     {
       id: "char-08",
-      name: "???",
-      codename: "PRISONER_08",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "시계공",
+      codename: "CLOCKMAKER",
+      image: "P8",
+      concept: "「시간 / 태엽」",
+      description: "자신 주변의 시간 흐름을 조작하는 능력자. 항상 회중시계를 가지고 다니며, 시간의 소중함을 누구보다 잘 안다. 무언가를 계속 기다리고 있는 듯한 표정을 짓는다.",
+      crime: "지연",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "가속", desc: "자신의 시간 5% 가속 (반응속도 상승)" },
+        { stage: 3, name: "정지", desc: "지정 구역 시간 정지 (3초, 자신 포함)" },
+        { stage: 1, name: "되감기", desc: "자신만 10초 전 상태로 복구" },
       ],
-      quote: "\"...\""
+      stats: { power: 6, speed: 9, range: 4, technique: 8, mental: 7 },
+      quote: "\"시간은 모두에게 공평하지 않아.\""
     },
     {
       id: "char-09",
-      name: "???",
-      codename: "PRISONER_09",
-      image: "",
-      concept: "「???」",
-      description: "데이터 없음",
-      crime: "???",
+      name: "공명자",
+      codename: "RESONANCE",
+      image: "P9",
+      concept: "「소리 / 파동」",
+      description: "소리와 진동을 무기화하는 능력자. 청각이 극도로 발달해 심장 박동만으로 상대의 감정을 읽는다. 평소에는 조용하지만, 전투 시 광기어린 미소를 짓는다.",
+      crime: "파괴",
       abilities: [
-        { stage: 5, name: "???", desc: "???" },
-        { stage: 3, name: "???", desc: "???" },
-        { stage: 1, name: "???", desc: "???" },
+        { stage: 5, name: "감지", desc: "반경 내 소리 감지 (심장박동까지)" },
+        { stage: 3, name: "충격파", desc: "지향성 음파 공격 (균형감 상실)" },
+        { stage: 1, name: "공진", desc: "대상의 고유진동수에 맞춰 내부 파괴" },
       ],
-      quote: "\"...\""
+      stats: { power: 9, speed: 6, range: 7, technique: 7, mental: 5 },
+      quote: "\"네 심장 소리, 점점 빨라지네.\""
     },
   ],
 
-  // 버뮤다 구역 (3개) - 추상적 구역
+  // 버뮤다 구역 (9개) - 마름모 배치
   bermudaZones: [
     {
-      id: "zone-a",
-      name: "SECTOR A",
-      subtitle: "폐허 구역",
-      description: "버뮤다가 처음 출현했을 때 파괴된 건물들이 그대로 남아있는 구역. 무너진 고층 빌딩과 뒤틀린 철골 구조물이 미로처럼 얽혀있다. 은폐와 기습에 유리하지만 언제 붕괴될지 모르는 위험이 도사린다.",
-      features: ["불안정한 지형", "은폐처 다수", "붕괴 위험"],
+      id: "zone-1",
+      name: "SECTOR 1",
+      subtitle: "잔해 구역",
+      position: "top",
+      description: "버뮤다 최북단. 초기 출현 시 파괴된 건물 잔해가 산처럼 쌓여있다. 고지대를 점령한 자가 유리하지만, 불안정한 지반으로 언제든 무너질 수 있다.",
+      features: ["고지대", "붕괴 위험", "저격 포인트"],
       danger: "중",
-      color: "#4a90a4",
+      color: "#4a7a9a",
     },
     {
-      id: "zone-b",
-      name: "SECTOR B",
-      subtitle: "공허 구역",
-      description: "아무것도 없는 평지. 시야를 가릴 것이 전혀 없어 원거리 전투에 특화된 구역이다. 숨을 곳이 없기에 오직 실력만이 생존을 보장한다. 딜레마 이벤트가 가장 자주 발생하는 장소.",
-      features: ["완전 개활지", "원거리 유리", "딜레마 다발 지역"],
+      id: "zone-2",
+      name: "SECTOR 2",
+      subtitle: "안개 구역",
+      position: "top-left",
+      description: "항상 짙은 안개가 끼어있는 구역. 시야가 극도로 제한되며 소리만으로 상대를 파악해야 한다. 기습과 암살에 특화된 죄수들이 선호한다.",
+      features: ["시야 제한", "음향 증폭", "기습 유리"],
       danger: "상",
-      color: "#a4905a",
+      color: "#6a6a8a",
     },
     {
-      id: "zone-c",
-      name: "SECTOR C",
-      subtitle: "심연 구역",
-      description: "버뮤다의 중심부. 현실의 법칙이 불안정하게 작동하며 공간이 왜곡되어 있다. 능력의 출력이 증폭되지만 그만큼 코인 소모도 빨라진다. 최종 결전이 벌어지는 곳.",
-      features: ["공간 왜곡", "능력 증폭", "코인 소모 가속"],
+      id: "zone-3",
+      name: "SECTOR 3",
+      subtitle: "결빙 구역",
+      position: "top-right",
+      description: "온도가 비정상적으로 낮은 구역. 지면이 얼어있어 이동이 불안정하고, 장시간 체류 시 동상 위험이 있다. 능력 사용 시 코인 소모가 증가한다.",
+      features: ["미끄러운 지형", "코인 소모 증가", "동상 위험"],
+      danger: "상",
+      color: "#5a9aaa",
+    },
+    {
+      id: "zone-4",
+      name: "SECTOR 4",
+      subtitle: "미로 구역",
+      position: "left",
+      description: "끊임없이 구조가 변하는 미로. 같은 길을 걸어도 다른 곳에 도착한다. 공간 감각이 뛰어난 자만이 이 구역을 활용할 수 있다.",
+      features: ["구조 변화", "방향 상실", "추적 불가"],
+      danger: "상",
+      color: "#7a6a9a",
+    },
+    {
+      id: "zone-5",
+      name: "SECTOR 5",
+      subtitle: "중심 구역",
+      position: "center",
+      description: "버뮤다의 정중앙. 모든 구역이 이곳으로 통한다. 능력이 증폭되지만 그만큼 코인 소모도 가속된다. 최종 결전이 벌어지는 곳.",
+      features: ["능력 증폭", "코인 소모 가속", "최종 결전지"],
       danger: "최상",
-      color: "#a45a5a",
+      color: "#aa5a6a",
+    },
+    {
+      id: "zone-6",
+      name: "SECTOR 6",
+      subtitle: "폐공장 구역",
+      position: "right",
+      description: "녹슨 기계와 파이프가 가득한 산업시설 폐허. 복잡한 내부 구조로 근접전에 유리하며, 기계 파편을 무기로 활용할 수 있다.",
+      features: ["복잡한 구조", "근접전 유리", "즉석 무기"],
+      danger: "중",
+      color: "#8a7a5a",
+    },
+    {
+      id: "zone-7",
+      name: "SECTOR 7",
+      subtitle: "공허 구역",
+      position: "bottom-left",
+      description: "아무것도 없는 평지. 시야를 가릴 것이 전혀 없어 원거리 전투에 특화되어 있다. 숨을 곳이 없기에 오직 실력만이 생존을 보장한다.",
+      features: ["완전 개활지", "원거리 유리", "은폐 불가"],
+      danger: "중",
+      color: "#6a8a6a",
+    },
+    {
+      id: "zone-8",
+      name: "SECTOR 8",
+      subtitle: "함정 구역",
+      position: "bottom-right",
+      description: "이전 게임에서 죽은 죄수들이 남긴 함정이 곳곳에 설치된 구역. 한 발 한 발이 위험하며, 이를 역으로 이용하는 전략도 가능하다.",
+      features: ["함정 다수", "신중함 필요", "역이용 가능"],
+      danger: "상",
+      color: "#9a6a5a",
+    },
+    {
+      id: "zone-9",
+      name: "SECTOR 9",
+      subtitle: "심연 구역",
+      position: "bottom",
+      description: "버뮤다 최남단의 가장 깊은 곳. 빛이 닿지 않아 완전한 어둠이며, 현실의 법칙이 불안정하게 작동한다. 딜레마 이벤트가 가장 자주 발생한다.",
+      features: ["완전한 어둠", "법칙 불안정", "딜레마 다발"],
+      danger: "최상",
+      color: "#5a4a6a",
     },
   ],
 
@@ -183,7 +258,7 @@ const CONFIG = {
   glossary: [
     {
       term: "버뮤다",
-      definition: "어느 날 갑자기 출현한 삼각형 구역. 죄수들이 강제로 소환되어 최후의 1인이 될 때까지 싸우는 배틀로얄 공간. 외부에서는 관측되지 않는다.",
+      definition: "어느 날 갑자기 출현한 마름모 형태의 구역. 죄수들이 강제로 소환되어 최후의 1인이 될 때까지 싸우는 배틀로얄 공간. 외부에서는 관측되지 않는다.",
     },
     {
       term: "죄수",
@@ -296,7 +371,7 @@ const styles = `
     z-index: 9999;
   }
 
-  /* ==================== 인트로 - 클릭 진행 ==================== */
+  /* ==================== 인트로 ==================== */
   
   .intro-container {
     position: fixed;
@@ -646,6 +721,7 @@ const styles = `
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .character-image img {
@@ -689,7 +765,7 @@ const styles = `
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* ==================== 캐릭터 모달 ==================== */
+  /* ==================== 서브컬쳐 스타일 캐릭터 모달 ==================== */
   
   .modal-overlay {
     position: fixed;
@@ -699,33 +775,47 @@ const styles = `
     bottom: 0;
     background: rgba(0, 0, 0, 0.95);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     z-index: 1000;
     padding: 16px;
     overflow-y: auto;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
   }
 
-  .modal-content {
-    background: var(--surface);
-    border: 1px solid var(--primary);
-    max-width: 700px;
+  .char-modal {
     width: 100%;
-    margin: 20px 0;
+    max-width: 900px;
+    max-height: 95vh;
+    overflow-y: auto;
     position: relative;
+    background: linear-gradient(135deg, #0d0d15 0%, #151520 50%, #0d0d15 100%);
+    border: 1px solid var(--primary);
+    box-shadow: 
+      0 0 60px rgba(0, 240, 255, 0.2),
+      inset 0 0 120px rgba(0, 240, 255, 0.03);
   }
 
-  .modal-close {
+  .char-modal::before {
+    content: '';
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
-    background: var(--bg);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
+  }
+
+  .char-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--text-dim);
     color: var(--text);
-    font-size: 18px;
+    font-size: 24px;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
@@ -734,141 +824,296 @@ const styles = `
     justify-content: center;
   }
 
-  .modal-close:hover {
+  .char-modal-close:hover {
     border-color: var(--secondary);
     color: var(--secondary);
+    background: rgba(255, 51, 102, 0.1);
   }
 
-  .modal-header {
+  /* 상단 영역: 캐릭터 이미지 + 기본정보 */
+  .char-modal-top {
     display: flex;
-    gap: 16px;
-    padding: 20px;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    gap: 0;
+    min-height: 300px;
   }
 
-  .modal-image {
-    width: clamp(100px, 30vw, 160px);
-    height: clamp(120px, 35vw, 200px);
-    background: var(--surface-light);
-    border: 1px solid var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  .char-modal-image-section {
+    width: 45%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
   }
 
-  .modal-image img {
+  .char-modal-image-section img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top center;
   }
 
-  .modal-title-area {
-    flex: 1;
+  .char-modal-image-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  }
+
+  .char-modal-info-section {
+    width: 55%;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 0;
+    position: relative;
   }
 
-  .modal-codename {
+  .char-modal-codename {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(9px, 2vw, 11px);
-    letter-spacing: 3px;
+    font-size: 11px;
+    letter-spacing: 4px;
     color: var(--primary);
-    margin-bottom: 4px;
-  }
-
-  .modal-name {
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .modal-concept {
-    font-size: clamp(11px, 2.5vw, 14px);
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
     margin-bottom: 8px;
+    text-shadow: 0 0 10px var(--primary);
   }
 
-  .modal-crime {
-    font-size: clamp(10px, 2vw, 12px);
-    color: var(--secondary);
+  .char-modal-name {
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 900;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .char-modal-concept {
     font-family: 'JetBrains Mono', monospace;
-    padding: 4px 10px;
-    background: rgba(255, 51, 102, 0.1);
-    display: inline-block;
-    margin-bottom: 12px;
-    align-self: flex-start;
-  }
-
-  .modal-quote {
-    font-style: italic;
+    font-size: 14px;
     color: var(--text-dim);
-    font-size: clamp(11px, 2.5vw, 13px);
-    padding-left: 10px;
+    margin-bottom: 16px;
+  }
+
+  .char-modal-crime {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--secondary);
+    padding: 8px 16px;
+    background: rgba(255, 51, 102, 0.1);
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .char-modal-crime::before {
+    content: '◆';
+    font-size: 8px;
+  }
+
+  .char-modal-quote {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 12px 16px;
     border-left: 2px solid var(--primary);
+    background: rgba(0, 240, 255, 0.03);
   }
 
-  .modal-body {
-    padding: 20px;
+  /* 스탯 섹션 */
+  .char-modal-stats {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
   }
 
-  .modal-description {
-    font-size: clamp(12px, 3vw, 14px);
-    line-height: 1.8;
-    color: var(--text);
-    margin-bottom: 20px;
+  .stats-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
   }
 
-  .abilities-section {
-    margin-bottom: 20px;
+  .stats-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .stat-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .stat-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--primary);
+  }
+
+  .stat-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    box-shadow: 0 0 10px var(--primary);
+    transition: width 0.8s ease;
+  }
+
+  /* 능력 섹션 */
+  .char-modal-abilities {
+    padding: 24px;
   }
 
   .abilities-title {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(9px, 2vw, 10px);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .abilities-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--text-dim), transparent);
+  }
+
+  .ability-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: rgba(0, 240, 255, 0.03);
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .ability-card:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    background: rgba(0, 240, 255, 0.05);
+  }
+
+  .ability-card.critical {
+    background: rgba(255, 51, 102, 0.05);
+    border-color: rgba(255, 51, 102, 0.2);
+  }
+
+  .ability-card.critical:hover {
+    border-color: rgba(255, 51, 102, 0.4);
+  }
+
+  .ability-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--primary);
+  }
+
+  .ability-card.critical::before {
+    background: var(--secondary);
+  }
+
+  .ability-coin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+  }
+
+  .ability-coin-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .ability-coin-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--primary);
+  }
+
+  .ability-card.critical .ability-coin-value {
+    color: var(--secondary);
+    text-shadow: 0 0 20px var(--secondary);
+  }
+
+  .ability-info {
+    flex: 1;
+  }
+
+  .ability-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .ability-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* 설명 섹션 */
+  .char-modal-description {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+  }
+
+  .description-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
     letter-spacing: 3px;
     color: var(--text-dim);
     margin-bottom: 12px;
   }
 
-  .ability-item {
-    display: flex;
-    gap: 12px;
-    padding: 12px;
-    background: rgba(0, 240, 255, 0.03);
-    border-left: 3px solid var(--primary);
-    margin-bottom: 8px;
-  }
-
-  .ability-item.critical {
-    border-left-color: var(--secondary);
-    background: rgba(255, 51, 102, 0.05);
-  }
-
-  .ability-stage {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(14px, 4vw, 18px);
-    font-weight: 900;
-    min-width: 24px;
-  }
-
-  .ability-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .ability-name {
-    font-weight: 700;
-    font-size: clamp(12px, 3vw, 14px);
-    margin-bottom: 2px;
-  }
-
-  .ability-desc {
-    font-size: clamp(11px, 2.5vw, 12px);
-    color: var(--text-dim);
+  .description-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
   }
 
   /* ==================== 세계관 탭 ==================== */
@@ -887,7 +1132,6 @@ const styles = `
     border-bottom: 1px solid rgba(0, 240, 255, 0.2);
   }
 
-  /* 용어집 */
   .glossary-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -914,7 +1158,6 @@ const styles = `
     color: var(--text-dim);
   }
 
-  /* 딜레마 테이블 */
   .dilemma-table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -953,7 +1196,6 @@ const styles = `
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* 코인 시스템 */
   .coin-system {
     display: flex;
     flex-direction: column;
@@ -993,168 +1235,208 @@ const styles = `
     color: var(--text-dim);
   }
 
-  /* ==================== 지도 탭 ==================== */
+  /* ==================== 마름모 지도 ==================== */
   
   .map-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 24px;
   }
 
-  .map-visual {
+  .diamond-map {
     width: 100%;
     max-width: 500px;
-    margin: 0 auto;
     aspect-ratio: 1;
     position: relative;
-    background: var(--surface);
-    border: 1px solid rgba(0, 240, 255, 0.2);
   }
 
-  .bermuda-triangle {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .diamond-map svg {
     width: 100%;
     height: 100%;
   }
 
-  .triangle-main {
+  .diamond-outline {
     fill: none;
     stroke: var(--primary);
     stroke-width: 2;
     filter: drop-shadow(0 0 10px var(--primary));
-    animation: trianglePulse 3s infinite;
   }
 
-  @keyframes trianglePulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-
-  .zone-area {
+  .zone-cell {
     fill: rgba(0, 240, 255, 0.05);
-    stroke: rgba(0, 240, 255, 0.3);
+    stroke: rgba(0, 240, 255, 0.2);
     stroke-width: 1;
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
-  .zone-area:hover {
+  .zone-cell:hover {
     fill: rgba(0, 240, 255, 0.15);
+    stroke: var(--primary);
   }
 
-  .zone-area.active {
+  .zone-cell.active {
     fill: rgba(0, 240, 255, 0.2);
     stroke: var(--primary);
     stroke-width: 2;
   }
 
-  .zone-label {
+  .zone-number {
     font-family: 'Orbitron', monospace;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     fill: var(--text);
     text-anchor: middle;
     pointer-events: none;
   }
 
-  .zone-sublabel {
+  .zone-subtitle {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 10px;
+    font-size: 9px;
     fill: var(--text-dim);
     text-anchor: middle;
     pointer-events: none;
   }
 
-  .zone-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  .zone-card {
-    background: var(--surface);
-    border: 1px solid rgba(0, 240, 255, 0.1);
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .zone-card:hover,
-  .zone-card.active {
-    border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-  }
-
-  .zone-card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .zone-card-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Orbitron', monospace;
-    font-size: 16px;
-    font-weight: 900;
-    border: 2px solid;
-  }
-
-  .zone-card-titles {
-    flex: 1;
-  }
-
-  .zone-card-name {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(12px, 3vw, 14px);
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-
-  .zone-card-subtitle {
-    font-size: clamp(11px, 2.5vw, 12px);
-    color: var(--text-dim);
-  }
-
-  .zone-card-desc {
-    font-size: clamp(12px, 3vw, 13px);
-    line-height: 1.7;
-    color: var(--text-dim);
-    margin-bottom: 12px;
-  }
-
-  .zone-card-features {
+  .map-legend {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
     gap: 6px;
-    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .legend-color {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* 구역 상세 모달 */
+  .zone-modal {
+    background: linear-gradient(135deg, #0d0d15, #151520);
+    border: 1px solid var(--primary);
+    max-width: 500px;
+    width: 100%;
+    padding: 0;
+    position: relative;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.2);
+  }
+
+  .zone-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    position: relative;
+  }
+
+  .zone-modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+
+  .zone-modal-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--primary);
+    text-shadow: 0 0 30px var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .zone-modal-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+  }
+
+  .zone-modal-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .zone-modal-body {
+    padding: 24px;
+  }
+
+  .zone-modal-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .zone-modal-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
   }
 
   .zone-feature {
-    font-size: clamp(9px, 2vw, 10px);
-    padding: 4px 8px;
+    font-size: 11px;
+    padding: 6px 12px;
     background: rgba(0, 240, 255, 0.1);
     color: var(--primary);
     font-family: 'JetBrains Mono', monospace;
+    border: 1px solid rgba(0, 240, 255, 0.2);
   }
 
-  .zone-card-danger {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(10px, 2vw, 11px);
+  .zone-modal-danger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 51, 102, 0.1);
+    border: 1px solid rgba(255, 51, 102, 0.2);
   }
 
   .zone-danger-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
     color: var(--text-dim);
-    margin-right: 8px;
   }
 
   .zone-danger-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--secondary);
+  }
+
+  .zone-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--text-dim);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .zone-modal-close:hover {
+    border-color: var(--secondary);
     color: var(--secondary);
   }
 
@@ -1193,28 +1475,33 @@ const styles = `
     }
   }
 
+  @media (max-width: 640px) {
+    .char-modal-top {
+      flex-direction: column;
+    }
+    
+    .char-modal-image-section {
+      width: 100%;
+      height: 250px;
+    }
+    
+    .char-modal-info-section {
+      width: 100%;
+    }
+    
+    .stats-grid {
+      gap: 12px;
+    }
+    
+    .stat-item {
+      min-width: 60px;
+    }
+  }
+
   @media (max-width: 480px) {
     .character-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-    }
-    
-    .modal-header {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .modal-crime {
-      align-self: center;
-    }
-    
-    .modal-quote {
-      border-left: none;
-      border-top: 2px solid var(--primary);
-      padding-left: 0;
-      padding-top: 10px;
-      text-align: center;
     }
     
     .dilemma-visual {
@@ -1223,7 +1510,6 @@ const styles = `
     }
     
     .vs-text {
-      transform: none;
       margin: 10px 0;
     }
     
@@ -1237,7 +1523,7 @@ const styles = `
 // 🎬 컴포넌트
 // ============================================================
 
-// 인트로: 클릭하여 진행
+// 인트로
 function DilemmaIntro({ onComplete }) {
   const [step, setStep] = useState(0);
   const totalSteps = 6;
@@ -1253,7 +1539,6 @@ function DilemmaIntro({ onComplete }) {
   };
 
   const scenes = [
-    // Step 0: 제목
     {
       title: "PRISONER'S DILEMMA",
       visual: null,
@@ -1264,7 +1549,6 @@ function DilemmaIntro({ onComplete }) {
         </>
       ),
     },
-    // Step 1: 둘 다 협력
     {
       title: "CASE 01",
       visual: { choiceA: 'cooperate', choiceB: 'cooperate', resultA: '+1', resultB: '+1' },
@@ -1275,7 +1559,6 @@ function DilemmaIntro({ onComplete }) {
         </>
       ),
     },
-    // Step 2: 둘 다 배신
     {
       title: "CASE 02",
       visual: { choiceA: 'betray', choiceB: 'betray', resultA: '0', resultB: '0' },
@@ -1286,7 +1569,6 @@ function DilemmaIntro({ onComplete }) {
         </>
       ),
     },
-    // Step 3: 한 명만 배신
     {
       title: "CASE 03",
       visual: { choiceA: 'betray', choiceB: 'cooperate', resultA: '+2', resultB: '-1' },
@@ -1297,7 +1579,6 @@ function DilemmaIntro({ onComplete }) {
         </>
       ),
     },
-    // Step 4: 역설
     {
       title: "THE PARADOX",
       visual: null,
@@ -1311,7 +1592,6 @@ function DilemmaIntro({ onComplete }) {
         </>
       ),
     },
-    // Step 5: 결론
     {
       title: "THE RULE",
       visual: null,
@@ -1396,11 +1676,13 @@ function DilemmaIntro({ onComplete }) {
 
 // 캐릭터 카드
 function CharacterCard({ character, onClick }) {
+  const imageSrc = character.image ? `${CONFIG.imageBasePath}${character.image}.png` : null;
+  
   return (
     <div className="character-card" onClick={onClick}>
       <div className="character-image">
-        {character.image ? (
-          <img src={character.image} alt={character.name} />
+        {imageSrc ? (
+          <img src={imageSrc} alt={character.name} />
         ) : (
           <div className="character-placeholder">?</div>
         )}
@@ -1414,11 +1696,12 @@ function CharacterCard({ character, onClick }) {
   );
 }
 
-// 캐릭터 모달
+// 서브컬쳐 스타일 캐릭터 모달
 function CharacterModal({ character, onClose }) {
   if (!character) return null;
   
-  // 모달 열릴 때 스크롤 방지
+  const imageSrc = character.image ? `${CONFIG.imageBasePath}${character.image}.png` : null;
+  
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -1428,45 +1711,120 @@ function CharacterModal({ character, onClose }) {
   
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
+      <div className="char-modal" onClick={e => e.stopPropagation()}>
+        <button className="char-modal-close" onClick={onClose}>×</button>
         
-        <div className="modal-header">
-          <div className="modal-image">
-            {character.image ? (
-              <img src={character.image} alt={character.name} />
+        {/* 상단: 이미지 + 기본정보 */}
+        <div className="char-modal-top">
+          <div className="char-modal-image-section">
+            {imageSrc ? (
+              <img src={imageSrc} alt={character.name} />
             ) : (
-              <div className="character-placeholder">?</div>
+              <div style={{ 
+                width: '100%', 
+                height: '100%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                background: 'var(--surface-light)',
+                fontSize: '64px',
+                color: 'var(--text-dim)',
+                opacity: 0.3
+              }}>?</div>
             )}
           </div>
-          <div className="modal-title-area">
-            <div className="modal-codename">{character.codename}</div>
-            <div className="modal-name">{character.name}</div>
-            <div className="modal-concept">{character.concept}</div>
-            <div className="modal-crime">죄목: {character.crime}</div>
-            <div className="modal-quote">{character.quote}</div>
+          <div className="char-modal-info-section">
+            <div className="char-modal-codename">{character.codename}</div>
+            <div className="char-modal-name">{character.name}</div>
+            <div className="char-modal-concept">{character.concept}</div>
+            <div className="char-modal-crime">죄목: {character.crime}</div>
+            <div className="char-modal-quote">{character.quote}</div>
           </div>
         </div>
         
-        <div className="modal-body">
-          <div className="modal-description">{character.description}</div>
-          
-          <div className="abilities-section">
-            <div className="abilities-title">ABILITIES BY COIN</div>
-            {character.abilities.map((ability, idx) => (
-              <div key={idx} className={`ability-item ${ability.stage === 1 ? 'critical' : ''}`}>
-                <div className="ability-stage" style={{ 
-                  color: ability.stage === 1 ? '#ff3366' : 
-                         ability.stage === 3 ? '#00f0ff' : '#666' 
-                }}>
-                  {ability.stage}
+        {/* 스탯 */}
+        {character.stats && (
+          <div className="char-modal-stats">
+            <div className="stats-title">PARAMETERS</div>
+            <div className="stats-grid">
+              {Object.entries(character.stats).map(([key, value]) => (
+                <div key={key} className="stat-item">
+                  <div className="stat-header">
+                    <span className="stat-name">{key.toUpperCase()}</span>
+                    <span className="stat-value">{value}</span>
+                  </div>
+                  <div className="stat-bar">
+                    <div className="stat-bar-fill" style={{ width: `${value * 10}%` }} />
+                  </div>
                 </div>
-                <div className="ability-content">
-                  <div className="ability-name">{ability.name}</div>
-                  <div className="ability-desc">{ability.desc}</div>
-                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* 능력 */}
+        <div className="char-modal-abilities">
+          <div className="abilities-title">ABILITIES</div>
+          {character.abilities.map((ability, idx) => (
+            <div key={idx} className={`ability-card ${ability.stage === 1 ? 'critical' : ''}`}>
+              <div className="ability-coin">
+                <div className="ability-coin-label">COIN</div>
+                <div className="ability-coin-value">{ability.stage}</div>
               </div>
+              <div className="ability-info">
+                <div className="ability-name">{ability.name}</div>
+                <div className="ability-desc">{ability.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* 설명 */}
+        <div className="char-modal-description">
+          <div className="description-title">PROFILE</div>
+          <div className="description-text">{character.description}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 구역 상세 모달
+function ZoneModal({ zone, onClose }) {
+  if (!zone) return null;
+  
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+  
+  const zoneNumber = zone.id.split('-')[1];
+  
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="zone-modal" onClick={e => e.stopPropagation()}>
+        <button className="zone-modal-close" onClick={onClose}>×</button>
+        
+        <div className="zone-modal-header">
+          <div className="zone-modal-number">{zoneNumber}</div>
+          <div className="zone-modal-name">{zone.name}</div>
+          <div className="zone-modal-subtitle">{zone.subtitle}</div>
+        </div>
+        
+        <div className="zone-modal-body">
+          <div className="zone-modal-desc">{zone.description}</div>
+          
+          <div className="zone-modal-features">
+            {zone.features.map((feature, idx) => (
+              <span key={idx} className="zone-feature">{feature}</span>
             ))}
+          </div>
+          
+          <div className="zone-modal-danger">
+            <span className="zone-danger-label">위험도</span>
+            <span className="zone-danger-value">{zone.danger}</span>
           </div>
         </div>
       </div>
@@ -1478,7 +1836,6 @@ function CharacterModal({ character, onClose }) {
 function WorldTab() {
   return (
     <div>
-      {/* 용어집 */}
       <div className="world-section">
         <div className="world-section-title">GLOSSARY</div>
         <div className="glossary-grid">
@@ -1491,7 +1848,6 @@ function WorldTab() {
         </div>
       </div>
       
-      {/* 딜레마 규칙 */}
       <div className="world-section">
         <div className="world-section-title">DILEMMA</div>
         <div className="dilemma-condition">※ {CONFIG.rules.dilemma.condition}</div>
@@ -1523,7 +1879,6 @@ function WorldTab() {
         </div>
       </div>
       
-      {/* 코인 시스템 */}
       <div className="world-section">
         <div className="world-section-title">COIN SYSTEM</div>
         <div className="coin-system">
@@ -1544,131 +1899,101 @@ function WorldTab() {
   );
 }
 
-// 지도 탭
+// 마름모 지도 탭
 function MapTab() {
-  const [activeZone, setActiveZone] = useState(CONFIG.bermudaZones[0]);
+  const [selectedZone, setSelectedZone] = useState(null);
   
-  // 삼각형 좌표 (SVG 내부)
-  const trianglePoints = {
-    top: { x: 200, y: 50 },
-    left: { x: 60, y: 330 },
-    right: { x: 340, y: 330 },
+  // 마름모 형태로 9칸 배치 (3x3 다이아몬드)
+  // 중심이 (200, 200)인 마름모, 크기 조절
+  const size = 60; // 각 셀의 크기
+  const gap = 4;
+  
+  // 마름모 좌표 계산
+  const getCellPath = (row, col) => {
+    // 마름모 형태의 중심 좌표
+    const centerX = 200;
+    const centerY = 200;
+    
+    // row, col에 따른 오프셋 (마름모 45도 회전)
+    const offsetX = (col - row) * (size + gap) * 0.7;
+    const offsetY = (col + row - 2) * (size + gap) * 0.7;
+    
+    const cx = centerX + offsetX;
+    const cy = centerY + offsetY;
+    
+    // 마름모 모양의 셀
+    return {
+      path: `M ${cx} ${cy - size * 0.6} L ${cx + size * 0.6} ${cy} L ${cx} ${cy + size * 0.6} L ${cx - size * 0.6} ${cy} Z`,
+      center: { x: cx, y: cy }
+    };
   };
   
-  // 중심점
-  const center = {
-    x: (trianglePoints.top.x + trianglePoints.left.x + trianglePoints.right.x) / 3,
-    y: (trianglePoints.top.y + trianglePoints.left.y + trianglePoints.right.y) / 3,
-  };
-  
-  // 각 구역의 중심점
+  // 9개 구역의 위치 (row, col)
   const zonePositions = [
-    { x: (trianglePoints.top.x + center.x + (trianglePoints.top.x + trianglePoints.left.x) / 2 + (trianglePoints.top.x + trianglePoints.right.x) / 2) / 4, y: trianglePoints.top.y + 70 }, // A
-    { x: trianglePoints.left.x + 60, y: trianglePoints.left.y - 60 }, // B
-    { x: trianglePoints.right.x - 60, y: trianglePoints.right.y - 60 }, // C
+    { row: 0, col: 1 }, // 1: top
+    { row: 0, col: 0 }, // 2: top-left
+    { row: 0, col: 2 }, // 3: top-right
+    { row: 1, col: 0 }, // 4: left
+    { row: 1, col: 1 }, // 5: center
+    { row: 1, col: 2 }, // 6: right
+    { row: 2, col: 0 }, // 7: bottom-left
+    { row: 2, col: 2 }, // 8: bottom-right
+    { row: 2, col: 1 }, // 9: bottom
   ];
   
   return (
     <div className="map-container">
-      <div className="map-visual">
-        <svg viewBox="0 0 400 400" className="bermuda-triangle">
-          {/* 메인 삼각형 */}
-          <polygon
-            className="triangle-main"
-            points={`${trianglePoints.top.x},${trianglePoints.top.y} ${trianglePoints.left.x},${trianglePoints.left.y} ${trianglePoints.right.x},${trianglePoints.right.y}`}
+      <div className="diamond-map">
+        <svg viewBox="0 0 400 400">
+          {/* 외곽 마름모 */}
+          <path
+            className="diamond-outline"
+            d="M 200 40 L 360 200 L 200 360 L 40 200 Z"
           />
           
-          {/* 구역 A (상단) */}
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-a' ? 'active' : ''}`}
-            points={`${trianglePoints.top.x},${trianglePoints.top.y} ${center.x},${center.y} ${(trianglePoints.top.x + trianglePoints.left.x) / 2},${(trianglePoints.top.y + trianglePoints.left.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[0])}
-          />
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-a' ? 'active' : ''}`}
-            points={`${trianglePoints.top.x},${trianglePoints.top.y} ${center.x},${center.y} ${(trianglePoints.top.x + trianglePoints.right.x) / 2},${(trianglePoints.top.y + trianglePoints.right.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[0])}
-          />
-          <text className="zone-label" x={zonePositions[0].x} y={zonePositions[0].y}>A</text>
-          <text className="zone-sublabel" x={zonePositions[0].x} y={zonePositions[0].y + 14}>폐허</text>
-          
-          {/* 구역 B (좌하단) */}
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-b' ? 'active' : ''}`}
-            points={`${trianglePoints.left.x},${trianglePoints.left.y} ${center.x},${center.y} ${(trianglePoints.top.x + trianglePoints.left.x) / 2},${(trianglePoints.top.y + trianglePoints.left.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[1])}
-          />
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-b' ? 'active' : ''}`}
-            points={`${trianglePoints.left.x},${trianglePoints.left.y} ${center.x},${center.y} ${(trianglePoints.left.x + trianglePoints.right.x) / 2},${(trianglePoints.left.y + trianglePoints.right.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[1])}
-          />
-          <text className="zone-label" x={zonePositions[1].x} y={zonePositions[1].y}>B</text>
-          <text className="zone-sublabel" x={zonePositions[1].x} y={zonePositions[1].y + 14}>공허</text>
-          
-          {/* 구역 C (우하단) */}
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-c' ? 'active' : ''}`}
-            points={`${trianglePoints.right.x},${trianglePoints.right.y} ${center.x},${center.y} ${(trianglePoints.top.x + trianglePoints.right.x) / 2},${(trianglePoints.top.y + trianglePoints.right.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[2])}
-          />
-          <polygon
-            className={`zone-area ${activeZone.id === 'zone-c' ? 'active' : ''}`}
-            points={`${trianglePoints.right.x},${trianglePoints.right.y} ${center.x},${center.y} ${(trianglePoints.left.x + trianglePoints.right.x) / 2},${(trianglePoints.left.y + trianglePoints.right.y) / 2}`}
-            onClick={() => setActiveZone(CONFIG.bermudaZones[2])}
-          />
-          <text className="zone-label" x={zonePositions[2].x} y={zonePositions[2].y}>C</text>
-          <text className="zone-sublabel" x={zonePositions[2].x} y={zonePositions[2].y + 14}>심연</text>
-          
-          {/* 중심점 */}
-          <circle cx={center.x} cy={center.y} r="5" fill="#00f0ff" />
-          <text 
-            x={center.x} 
-            y={center.y + 20} 
-            style={{ 
-              fontFamily: 'Orbitron, monospace', 
-              fontSize: '8px', 
-              fill: '#00f0ff',
-              textAnchor: 'middle'
-            }}
-          >
-            CENTER
-          </text>
+          {/* 9개 구역 */}
+          {CONFIG.bermudaZones.map((zone, idx) => {
+            const pos = zonePositions[idx];
+            const cell = getCellPath(pos.row, pos.col);
+            const zoneNumber = zone.id.split('-')[1];
+            
+            return (
+              <g key={zone.id} onClick={() => setSelectedZone(zone)}>
+                <path
+                  className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`}
+                  d={cell.path}
+                  style={{ fill: `${zone.color}33` }}
+                />
+                <text className="zone-number" x={cell.center.x} y={cell.center.y + 4}>
+                  {zoneNumber}
+                </text>
+                <text className="zone-subtitle" x={cell.center.x} y={cell.center.y + 18}>
+                  {zone.subtitle.replace(' 구역', '')}
+                </text>
+              </g>
+            );
+          })}
         </svg>
       </div>
       
-      <div className="zone-cards">
-        {CONFIG.bermudaZones.map(zone => (
-          <div 
-            key={zone.id}
-            className={`zone-card ${activeZone.id === zone.id ? 'active' : ''}`}
-            onClick={() => setActiveZone(zone)}
-          >
-            <div className="zone-card-header">
-              <div 
-                className="zone-card-icon"
-                style={{ borderColor: zone.color, color: zone.color }}
-              >
-                {zone.name.split(' ')[1]}
-              </div>
-              <div className="zone-card-titles">
-                <div className="zone-card-name" style={{ color: zone.color }}>{zone.name}</div>
-                <div className="zone-card-subtitle">{zone.subtitle}</div>
-              </div>
-            </div>
-            <div className="zone-card-desc">{zone.description}</div>
-            <div className="zone-card-features">
-              {zone.features.map((feature, idx) => (
-                <span key={idx} className="zone-feature">{feature}</span>
-              ))}
-            </div>
-            <div className="zone-card-danger">
-              <span className="zone-danger-label">위험도:</span>
-              <span className="zone-danger-value">{zone.danger}</span>
-            </div>
-          </div>
-        ))}
+      <div className="map-legend">
+        <div className="legend-item">
+          <div className="legend-color" style={{ background: '#5a9aaa' }} />
+          <span>중</span>
+        </div>
+        <div className="legend-item">
+          <div className="legend-color" style={{ background: '#a4905a' }} />
+          <span>상</span>
+        </div>
+        <div className="legend-item">
+          <div className="legend-color" style={{ background: '#aa5a6a' }} />
+          <span>최상</span>
+        </div>
       </div>
+      
+      {selectedZone && (
+        <ZoneModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
+      )}
     </div>
   );
 }
