@@ -1223,7 +1223,8 @@ const styles = `
     }
     
     .vs-text {
-      transform: rotate(90deg);
+      transform: none;
+      margin: 10px 0;
     }
     
     .dilemma-result {
