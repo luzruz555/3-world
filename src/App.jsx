@@ -160,97 +160,47 @@ const CONFIG = {
     },
   ],
 
-  // 버뮤다 구역 (9개) - 마름모 배치
+  // 버뮤다 구역 (4개) - 삼각형 배치
   bermudaZones: [
     {
-      id: "zone-1",
-      name: "SECTOR 1",
-      subtitle: "잔해 구역",
-      position: "top",
-      description: "버뮤다 최북단. 초기 출현 시 파괴된 건물 잔해가 산처럼 쌓여있다. 고지대를 점령한 자가 유리하지만, 불안정한 지반으로 언제든 무너질 수 있다.",
-      features: ["고지대", "붕괴 위험", "저격 포인트"],
-      danger: "중",
-      color: "#4a7a9a",
-    },
-    {
-      id: "zone-2",
-      name: "SECTOR 2",
-      subtitle: "안개 구역",
-      position: "top-left",
-      description: "항상 짙은 안개가 끼어있는 구역. 시야가 극도로 제한되며 소리만으로 상대를 파악해야 한다. 기습과 암살에 특화된 죄수들이 선호한다.",
-      features: ["시야 제한", "음향 증폭", "기습 유리"],
-      danger: "상",
-      color: "#6a6a8a",
-    },
-    {
-      id: "zone-3",
-      name: "SECTOR 3",
-      subtitle: "결빙 구역",
-      position: "top-right",
-      description: "온도가 비정상적으로 낮은 구역. 지면이 얼어있어 이동이 불안정하고, 장시간 체류 시 동상 위험이 있다. 능력 사용 시 코인 소모가 증가한다.",
-      features: ["미끄러운 지형", "코인 소모 증가", "동상 위험"],
-      danger: "상",
-      color: "#5a9aaa",
-    },
-    {
-      id: "zone-4",
-      name: "SECTOR 4",
-      subtitle: "미로 구역",
-      position: "left",
-      description: "끊임없이 구조가 변하는 미로. 같은 길을 걸어도 다른 곳에 도착한다. 공간 감각이 뛰어난 자만이 이 구역을 활용할 수 있다.",
-      features: ["구조 변화", "방향 상실", "추적 불가"],
-      danger: "상",
-      color: "#7a6a9a",
-    },
-    {
-      id: "zone-5",
-      name: "SECTOR 5",
+      id: "zone-center",
+      name: "SECTOR 0",
       subtitle: "중심 구역",
       position: "center",
-      description: "버뮤다의 정중앙. 모든 구역이 이곳으로 통한다. 능력이 증폭되지만 그만큼 코인 소모도 가속된다. 최종 결전이 벌어지는 곳.",
+      description: "버뮤다의 심장부. 세 꼭짓점 구역이 모두 이곳으로 통한다. 능력이 극대화되지만 그만큼 코인 소모도 가속된다. 게임 종반, 최후의 결전이 벌어지는 곳.",
       features: ["능력 증폭", "코인 소모 가속", "최종 결전지"],
       danger: "최상",
       color: "#aa5a6a",
     },
     {
-      id: "zone-6",
-      name: "SECTOR 6",
-      subtitle: "폐공장 구역",
-      position: "right",
-      description: "녹슨 기계와 파이프가 가득한 산업시설 폐허. 복잡한 내부 구조로 근접전에 유리하며, 기계 파편을 무기로 활용할 수 있다.",
-      features: ["복잡한 구조", "근접전 유리", "즉석 무기"],
+      id: "zone-alpha",
+      name: "SECTOR α",
+      subtitle: "잔해 구역",
+      position: "top",
+      description: "버뮤다 북쪽 꼭짓점. 초기 출현 시 파괴된 건물 잔해가 산처럼 쌓여있다. 고지대를 점령한 자가 유리하지만, 불안정한 지반으로 언제든 무너질 수 있다.",
+      features: ["고지대", "붕괴 위험", "저격 유리"],
       danger: "중",
-      color: "#8a7a5a",
+      color: "#4a90a4",
     },
     {
-      id: "zone-7",
-      name: "SECTOR 7",
-      subtitle: "공허 구역",
+      id: "zone-beta",
+      name: "SECTOR β",
+      subtitle: "안개 구역",
       position: "bottom-left",
-      description: "아무것도 없는 평지. 시야를 가릴 것이 전혀 없어 원거리 전투에 특화되어 있다. 숨을 곳이 없기에 오직 실력만이 생존을 보장한다.",
-      features: ["완전 개활지", "원거리 유리", "은폐 불가"],
-      danger: "중",
-      color: "#6a8a6a",
+      description: "버뮤다 남서쪽 꼭짓점. 항상 짙은 안개가 끼어있어 시야가 극도로 제한된다. 소리에 의존해야 하며, 기습과 암살에 특화된 죄수들이 선호하는 구역.",
+      features: ["시야 제한", "음향 증폭", "기습 유리"],
+      danger: "상",
+      color: "#6a6a8a",
     },
     {
-      id: "zone-8",
-      name: "SECTOR 8",
+      id: "zone-gamma",
+      name: "SECTOR γ",
       subtitle: "함정 구역",
       position: "bottom-right",
-      description: "이전 게임에서 죽은 죄수들이 남긴 함정이 곳곳에 설치된 구역. 한 발 한 발이 위험하며, 이를 역으로 이용하는 전략도 가능하다.",
+      description: "버뮤다 남동쪽 꼭짓점. 이전 게임에서 탈락한 죄수들이 남긴 함정이 곳곳에 설치되어 있다. 한 발 한 발이 위험하지만, 이를 역으로 이용하는 전략도 가능하다.",
       features: ["함정 다수", "신중함 필요", "역이용 가능"],
       danger: "상",
-      color: "#9a6a5a",
-    },
-    {
-      id: "zone-9",
-      name: "SECTOR 9",
-      subtitle: "심연 구역",
-      position: "bottom",
-      description: "버뮤다 최남단의 가장 깊은 곳. 빛이 닿지 않아 완전한 어둠이며, 현실의 법칙이 불안정하게 작동한다. 딜레마 이벤트가 가장 자주 발생한다.",
-      features: ["완전한 어둠", "법칙 불안정", "딜레마 다발"],
-      danger: "최상",
-      color: "#5a4a6a",
+      color: "#9a7a5a",
     },
   ],
 
@@ -258,7 +208,7 @@ const CONFIG = {
   glossary: [
     {
       term: "버뮤다",
-      definition: "어느 날 갑자기 출현한 마름모 형태의 구역. 죄수들이 강제로 소환되어 최후의 1인이 될 때까지 싸우는 배틀로얄 공간. 외부에서는 관측되지 않는다.",
+      definition: "어느 날 갑자기 출현한 삼각형 구역. 죄수들이 강제로 소환되어 최후의 1인이 될 때까지 싸우는 배틀로얄 공간. 외부에서는 관측되지 않는다.",
     },
     {
       term: "죄수",
@@ -1419,22 +1369,22 @@ const styles = `
   }
 
   .zone-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid var(--text-dim);
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 100;
-}
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--text-dim);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
 
   .zone-modal-close:hover {
     border-color: var(--secondary);
@@ -1801,7 +1751,15 @@ function ZoneModal({ zone, onClose }) {
     };
   }, []);
   
-  const zoneNumber = zone.id.split('-')[1];
+  // 구역 라벨 매핑
+  const zoneLabels = {
+    'zone-center': '0',
+    'zone-alpha': 'α',
+    'zone-beta': 'β',
+    'zone-gamma': 'γ',
+  };
+  
+  const zoneLabel = zoneLabels[zone.id] || zone.id;
   
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -1809,7 +1767,7 @@ function ZoneModal({ zone, onClose }) {
         <button className="zone-modal-close" onClick={onClose}>×</button>
         
         <div className="zone-modal-header">
-          <div className="zone-modal-number">{zoneNumber}</div>
+          <div className="zone-modal-number">{zoneLabel}</div>
           <div className="zone-modal-name">{zone.name}</div>
           <div className="zone-modal-subtitle">{zone.subtitle}</div>
         </div>
@@ -1900,90 +1858,112 @@ function WorldTab() {
   );
 }
 
-// 마름모 지도 탭
+// 삼각형 지도 탭 (4구역)
 function MapTab() {
   const [selectedZone, setSelectedZone] = useState(null);
   
-  // 마름모 형태로 9칸 배치 (3x3 다이아몬드)
-  // 중심이 (200, 200)인 마름모, 크기 조절
-  const size = 60; // 각 셀의 크기
-  const gap = 4;
-  
-  // 마름모 좌표 계산
-  const getCellPath = (row, col) => {
-    // 마름모 형태의 중심 좌표
-    const centerX = 200;
-    const centerY = 200;
-    
-    // row, col에 따른 오프셋 (마름모 45도 회전)
-    const offsetX = (col - row) * (size + gap) * 0.7;
-    const offsetY = (col + row - 2) * (size + gap) * 0.7;
-    
-    const cx = centerX + offsetX;
-    const cy = centerY + offsetY;
-    
-    // 마름모 모양의 셀
-    return {
-      path: `M ${cx} ${cy - size * 0.6} L ${cx + size * 0.6} ${cy} L ${cx} ${cy + size * 0.6} L ${cx - size * 0.6} ${cy} Z`,
-      center: { x: cx, y: cy }
-    };
+  // 삼각형 좌표
+  const points = {
+    top: { x: 200, y: 50 },
+    bottomLeft: { x: 50, y: 350 },
+    bottomRight: { x: 350, y: 350 },
   };
   
-  // 9개 구역의 위치 (row, col)
-  const zonePositions = [
-    { row: 0, col: 1 }, // 1: top
-    { row: 0, col: 0 }, // 2: top-left
-    { row: 0, col: 2 }, // 3: top-right
-    { row: 1, col: 0 }, // 4: left
-    { row: 1, col: 1 }, // 5: center
-    { row: 1, col: 2 }, // 6: right
-    { row: 2, col: 0 }, // 7: bottom-left
-    { row: 2, col: 2 }, // 8: bottom-right
-    { row: 2, col: 1 }, // 9: bottom
+  // 각 변의 중점
+  const midpoints = {
+    left: { x: (points.top.x + points.bottomLeft.x) / 2, y: (points.top.y + points.bottomLeft.y) / 2 },
+    right: { x: (points.top.x + points.bottomRight.x) / 2, y: (points.top.y + points.bottomRight.y) / 2 },
+    bottom: { x: (points.bottomLeft.x + points.bottomRight.x) / 2, y: (points.bottomLeft.y + points.bottomRight.y) / 2 },
+  };
+  
+  // 중심점
+  const center = {
+    x: (points.top.x + points.bottomLeft.x + points.bottomRight.x) / 3,
+    y: (points.top.y + points.bottomLeft.y + points.bottomRight.y) / 3,
+  };
+  
+  // 4개 구역 경로
+  const zonePaths = [
+    // 중앙 (역삼각형)
+    {
+      id: "zone-center",
+      path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
+      labelPos: { x: center.x, y: center.y + 10 },
+      label: "0",
+      sublabel: "중심"
+    },
+    // 상단 꼭짓점 (α)
+    {
+      id: "zone-alpha",
+      path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`,
+      labelPos: { x: points.top.x, y: points.top.y + 70 },
+      label: "α",
+      sublabel: "잔해"
+    },
+    // 좌하단 꼭짓점 (β)
+    {
+      id: "zone-beta",
+      path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
+      labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 50 },
+      label: "β",
+      sublabel: "안개"
+    },
+    // 우하단 꼭짓점 (γ)
+    {
+      id: "zone-gamma",
+      path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
+      labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 50 },
+      label: "γ",
+      sublabel: "함정"
+    },
   ];
   
   return (
     <div className="map-container">
       <div className="diamond-map">
         <svg viewBox="0 0 400 400">
-          {/* 외곽 마름모 */}
+          {/* 외곽 삼각형 */}
           <path
             className="diamond-outline"
-            d="M 200 40 L 360 200 L 200 360 L 40 200 Z"
+            d={`M ${points.top.x} ${points.top.y} L ${points.bottomLeft.x} ${points.bottomLeft.y} L ${points.bottomRight.x} ${points.bottomRight.y} Z`}
           />
           
-          {/* 9개 구역 */}
-          {CONFIG.bermudaZones.map((zone, idx) => {
-            const pos = zonePositions[idx];
-            const cell = getCellPath(pos.row, pos.col);
-            const zoneNumber = zone.id.split('-')[1];
+          {/* 4개 구역 */}
+          {zonePaths.map((zoneData, idx) => {
+            const zone = CONFIG.bermudaZones.find(z => z.id === zoneData.id);
+            if (!zone) return null;
             
             return (
-              <g key={zone.id} onClick={() => setSelectedZone(zone)}>
+              <g key={zone.id} onClick={() => setSelectedZone(zone)} style={{ cursor: 'pointer' }}>
                 <path
                   className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`}
-                  d={cell.path}
-                  style={{ fill: `${zone.color}33` }}
+                  d={zoneData.path}
+                  style={{ fill: `${zone.color}44` }}
                 />
-                <text className="zone-number" x={cell.center.x} y={cell.center.y + 4}>
-                  {zoneNumber}
+                <text className="zone-number" x={zoneData.labelPos.x} y={zoneData.labelPos.y}>
+                  {zoneData.label}
                 </text>
-                <text className="zone-subtitle" x={cell.center.x} y={cell.center.y + 18}>
-                  {zone.subtitle.replace(' 구역', '')}
+                <text className="zone-subtitle" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 16}>
+                  {zoneData.sublabel}
                 </text>
               </g>
             );
           })}
+          
+          {/* 내부 경계선 */}
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.right.x} y2={midpoints.right.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+          <line x1={midpoints.right.x} y1={midpoints.right.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
         </svg>
       </div>
       
       <div className="map-legend">
         <div className="legend-item">
-          <div className="legend-color" style={{ background: '#5a9aaa' }} />
+          <div className="legend-color" style={{ background: '#4a90a4' }} />
           <span>중</span>
         </div>
         <div className="legend-item">
-          <div className="legend-color" style={{ background: '#a4905a' }} />
+          <div className="legend-color" style={{ background: '#6a6a8a' }} />
           <span>상</span>
         </div>
         <div className="legend-item">
