@@ -48,7 +48,7 @@ const CONFIG = {
       adminComment: "지금 그녀의 얼굴조차 누군가의 얼굴일지도?,
     },
     {
-      id: "P5",
+      id: "P4",
       number: "04",
       name: "오스워드",
       alias: "도박사",
@@ -59,7 +59,7 @@ const CONFIG = {
       adminComment: "그가 진 기록은 단 한 번이야.",
     },
     {
-      id: "P4",
+      id: "P5",
       number: "05",
       name: "나린",
       alias: "puppeteer",
