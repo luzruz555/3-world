@@ -1,237 +1,187 @@
 import React, { useState, useEffect } from 'react';
 
 // ============================================================
-// 🔧 설정 영역 - 여기서 데이터를 수정하세요
+// 🔧 설정 영역
 // ============================================================
 
 const CONFIG = {
-  // 사이트 기본 정보
   siteTitle: "III",
-  siteSubtitle: "DON'T LOSE YOURSELF",
+  siteSubtitle: "PRISONER'S GAME",
   
-  // 이미지 베이스 경로
+  // 관리자 비밀번호 (Base64 인코딩)
+  adminPassword: "BERMUDA_TRUTH",
+  
   imageBasePath: "/img/",
   
-  // 캐릭터 데이터 (9명)
-  characters: [
+  // 참가자 데이터 (9명 - 10번째는 유저)
+  prisoners: [
     {
-      id: "char-01",
-      name: "지목자",
-      codename: "SELECTOR",
-      image: "P1",
-      concept: "「지목 / 선택」",
-      description: "손가락으로 가리킨 대상에게 효과를 부여하는 능력자. 그의 선택은 곧 심판이다. 버뮤다에서 가장 냉정한 처형자로 알려져 있으며, 감정 없이 표적을 지목한다.",
-      crime: "심판",
-      abilities: [
-        { stage: 5, name: "표식", desc: "대상 위치 표시 (10초)" },
-        { stage: 3, name: "속박", desc: "대상 3초간 강제 정지" },
-        { stage: 1, name: "선고", desc: "지목한 대상에게 누적 데미지 폭발" },
-      ],
-      stats: { power: 8, speed: 5, range: 9, technique: 7, mental: 6 },
-      quote: "\"네가 선택된 거야. 거부권 따윈 없어.\""
+      id: "P1",
+      number: "01",
+      name: "이서준",
+      alias: "지목자",
+      crime: "연쇄 살인 (7건)",
+      sentence: "사형",
+      ability: "「지목」 - 손가락으로 가리킨 대상에게 효과를 부여",
+      selfIntro: "내가 가리키면 끝이야. 복잡하게 생각할 것 없어.",
+      adminComment: "피해자 전원 그의 '선택'을 받기 전 도망칠 기회가 있었다",
     },
     {
-      id: "char-02",
-      name: "연출가",
-      codename: "DIRECTOR",
-      image: "P2",
-      concept: "「무대 / 각본」",
-      description: "일정 범위를 '극장'으로 선언하고 그 안에서 규칙을 강제하는 능력자. 모든 것을 자신의 시나리오대로 움직이려 하며, 예상치 못한 변수를 극도로 혐오한다.",
-      crime: "조작",
-      abilities: [
-        { stage: 5, name: "무대설치", desc: "영역 내 발소리/기척 증폭" },
-        { stage: 3, name: "독백", desc: "강제 독백 (거짓말 불가)" },
-        { stage: 1, name: "커튼콜", desc: "영역 내 모든 것을 30초 전으로 되돌림" },
-      ],
-      stats: { power: 5, speed: 4, range: 8, technique: 10, mental: 8 },
-      quote: "\"이 무대의 주인공은 나야. 넌 그저 엑스트라.\""
+      id: "P2",
+      number: "02",
+      name: "박하윤",
+      alias: "연출가",
+      crime: "사기 및 세뇌 (피해자 42명)",
+      sentence: "무기징역",
+      ability: "「무대」 - 지정 범위 내에서 규칙을 강제",
+      selfIntro: "모든 건 각본대로. 당신도 내 무대의 배우가 될 거예요.",
+      adminComment: "피해자들은 '자발적으로' 모든 것을 바쳤다고 증언했다",
     },
     {
-      id: "char-03",
-      name: "거울",
-      codename: "MIRROR",
-      image: "P3",
-      concept: "「반사 / 모방」",
-      description: "상대의 능력을 복제하거나 공격을 되돌리는 능력자. 자신만의 정체성이 없다는 콤플렉스를 가지고 있으며, 타인의 것을 빼앗는 데서 쾌감을 느낀다.",
-      crime: "사칭",
-      abilities: [
-        { stage: 5, name: "잔상", desc: "마지막으로 본 능력의 형태만 복제" },
-        { stage: 3, name: "반사", desc: "받은 공격을 50% 위력으로 반사" },
-        { stage: 1, name: "완전모방", desc: "상대 능력을 100% 복제하여 사용" },
-      ],
-      stats: { power: 7, speed: 6, range: 5, technique: 9, mental: 4 },
-      quote: "\"네 능력, 꽤 마음에 드는데?\""
+      id: "P3",
+      number: "03",
+      name: "김도윤",
+      alias: "거울",
+      crime: "신원 사칭 및 사기 (23건)",
+      sentence: "징역 45년",
+      ability: "「모방」 - 상대의 능력을 복제",
+      selfIntro: "난 누구든 될 수 있어. 근데 진짜 '나'는 누구지?",
+      adminComment: "그의 본래 얼굴을 아는 사람은 없다. 기록조차.",
     },
     {
-      id: "char-04",
-      name: "도박사",
-      codename: "GAMBLER",
-      image: "P5",
-      concept: "「확률 / 운」",
-      description: "확률을 조작하고 운에 기반한 능력을 사용하는 능력자. 삶 자체를 도박으로 여기며, 불확실성 속에서만 살아있음을 느낀다. 예측 가능한 것을 지루해한다.",
-      crime: "사기",
-      abilities: [
-        { stage: 5, name: "동전던지기", desc: "앞면 회복, 뒷면 데미지" },
-        { stage: 3, name: "확률조작", desc: "상대의 다음 공격 명중률 50%로 고정" },
-        { stage: 1, name: "올인", desc: "주사위 판정, 성공 시 즉사급 데미지" },
-      ],
-      stats: { power: 6, speed: 5, range: 6, technique: 7, mental: 9 },
-      quote: "\"운도 실력이야. 난 그걸 증명하지.\""
+      id: "P4",
+      number: "04",
+      name: "정민재",
+      alias: "도박사",
+      crime: "불법 도박장 운영, 살인 교사",
+      sentence: "무기징역",
+      ability: "「확률」 - 운과 확률을 조작",
+      selfIntro: "인생은 도박이야. 난 그냥 좀 더 잘할 뿐이지.",
+      adminComment: "그가 진 기록은 단 한 번도 없다. 단 한 번도.",
     },
     {
-      id: "char-05",
-      name: "인형사",
-      codename: "PUPPETEER",
-      image: "P4",
-      concept: "「실 / 조종」",
-      description: "보이지 않는 실로 대상을 조종하는 능력자. 사람을 도구로 보는 차가운 시선의 소유자. 누군가의 자유를 빼앗는 순간 희열을 느끼며, 자신도 누군가에게 조종당한 과거가 있다.",
-      crime: "착취",
-      abilities: [
-        { stage: 5, name: "조작", desc: "작은 물체 조종 (무기, 파편 등)" },
-        { stage: 3, name: "간섭", desc: "인체 일부 강제 조종 (한쪽 팔, 다리)" },
-        { stage: 1, name: "꼭두각시", desc: "상대 신체 완전 조종 (10초)" },
-      ],
-      stats: { power: 7, speed: 4, range: 7, technique: 10, mental: 5 },
-      quote: "\"춤춰봐. 내가 끈을 놓을 때까지.\""
+      id: "P5",
+      number: "05",
+      name: "오수빈",
+      alias: "인형사",
+      crime: "인신매매, 불법 감금",
+      sentence: "사형",
+      ability: "「조종」 - 보이지 않는 실로 대상을 지배",
+      selfIntro: "사람은 원래 조종당하고 싶어해. 난 그걸 도와줄 뿐이야.",
+      adminComment: "피해자들은 구출 후에도 그녀를 찾아 돌아왔다",
     },
     {
-      id: "char-06",
-      name: "망각자",
-      codename: "AMNESIAC",
-      image: "P6",
-      concept: "「기억 / 소거」",
-      description: "대상의 기억을 지우거나 조작하는 능력자. 자신의 과거 기억도 불완전하며, 자신이 왜 '죄수'가 되었는지조차 기억하지 못한다. 조용하고 공허한 눈을 가졌다.",
-      crime: "은폐",
-      abilities: [
-        { stage: 5, name: "희석", desc: "자신의 존재감 희석 (눈에 잘 안 띔)" },
-        { stage: 3, name: "삭제", desc: "최근 30초 기억 삭제" },
-        { stage: 1, name: "백지화", desc: "대상의 능력 사용법 기억 일시 삭제" },
-      ],
-      stats: { power: 4, speed: 6, range: 5, technique: 8, mental: 3 },
-      quote: "\"네가 뭘 하려 했는지... 기억나?\""
+      id: "P6",
+      number: "06",
+      name: "윤지호",
+      alias: "망각자",
+      crime: "신원 불명 - 관련 기록 전무",
+      sentence: "무기한 구금",
+      ability: "「소거」 - 대상의 기억을 삭제",
+      selfIntro: "...내가 왜 여기 있지? 당신은... 누구야?",
+      adminComment: "그에 대한 모든 기록은 그가 수감된 후 작성되었다",
     },
     {
-      id: "char-07",
-      name: "계약자",
-      codename: "CONTRACTOR",
-      image: "P7",
-      concept: "「약속 / 구속」",
-      description: "상대와 '계약'을 맺어 조건부 효과를 발동시키는 능력자. 규칙과 약속을 신성시하며, 한 번 맺은 계약은 반드시 지켜져야 한다고 믿는다. 아이러니하게도 그의 죄목은 배신이다.",
-      crime: "배신",
-      abilities: [
-        { stage: 5, name: "제안", desc: "계약 제안 - 거부 시 위치 노출" },
-        { stage: 3, name: "구속", desc: "계약 위반 시 자동 데미지" },
-        { stage: 1, name: "혈인", desc: "위반 시 코인 1개 강제 소모되는 절대 계약" },
-      ],
-      stats: { power: 5, speed: 5, range: 6, technique: 9, mental: 8 },
-      quote: "\"계약은 지켜야지. 그게 규칙이니까.\""
+      id: "P7",
+      number: "07",
+      name: "한예린",
+      alias: "계약자",
+      crime: "계약 사기, 배임 (피해액 2조원)",
+      sentence: "징역 120년",
+      ability: "「구속」 - 상대와 강제 계약을 체결",
+      selfIntro: "계약은 지켜져야 해. 그게 세상의 이치니까.",
+      adminComment: "아이러니하게도 그녀의 죄목은 '계약 위반'이다",
     },
     {
-      id: "char-08",
-      name: "시계공",
-      codename: "CLOCKMAKER",
-      image: "P8",
-      concept: "「시간 / 태엽」",
-      description: "자신 주변의 시간 흐름을 조작하는 능력자. 항상 회중시계를 가지고 다니며, 시간의 소중함을 누구보다 잘 안다. 무언가를 계속 기다리고 있는 듯한 표정을 짓는다.",
-      crime: "지연",
-      abilities: [
-        { stage: 5, name: "가속", desc: "자신의 시간 5% 가속 (반응속도 상승)" },
-        { stage: 3, name: "정지", desc: "지정 구역 시간 정지 (3초, 자신 포함)" },
-        { stage: 1, name: "되감기", desc: "자신만 10초 전 상태로 복구" },
-      ],
-      stats: { power: 6, speed: 9, range: 4, technique: 8, mental: 7 },
-      quote: "\"시간은 모두에게 공평하지 않아.\""
+      id: "P8",
+      number: "08",
+      name: "송태현",
+      alias: "시계공",
+      crime: "테러 (사상자 89명)",
+      sentence: "사형",
+      ability: "「시간」 - 자신 주변의 시간을 조작",
+      selfIntro: "시간은 모두에게 공평하지 않아. 내가 증명해줄게.",
+      adminComment: "폭발은 그가 '원하는' 시간에 정확히 일어났다",
     },
     {
-      id: "char-09",
-      name: "공명자",
-      codename: "RESONANCE",
-      image: "P9",
-      concept: "「소리 / 파동」",
-      description: "소리와 진동을 무기화하는 능력자. 청각이 극도로 발달해 심장 박동만으로 상대의 감정을 읽는다. 평소에는 조용하지만, 전투 시 광기어린 미소를 짓는다.",
-      crime: "파괴",
-      abilities: [
-        { stage: 5, name: "감지", desc: "반경 내 소리 감지 (심장박동까지)" },
-        { stage: 3, name: "충격파", desc: "지향성 음파 공격 (균형감 상실)" },
-        { stage: 1, name: "공진", desc: "대상의 고유진동수에 맞춰 내부 파괴" },
-      ],
-      stats: { power: 9, speed: 6, range: 7, technique: 7, mental: 5 },
-      quote: "\"네 심장 소리, 점점 빨라지네.\""
+      id: "P9",
+      number: "09",
+      name: "임서아",
+      alias: "공명자",
+      crime: "연쇄 살인 (13건) - 흉기 미발견",
+      sentence: "사형",
+      ability: "「파동」 - 소리와 진동을 무기화",
+      selfIntro: "네 심장 소리가 들려. 점점 빨라지고 있어... 후훗.",
+      adminComment: "피해자들의 사인은 전원 '내부 장기 파열'",
     },
   ],
 
-  // 버뮤다 구역 (4개) - 삼각형 배치
+  // 버뮤다 구역 (4개)
   bermudaZones: [
     {
       id: "zone-center",
       name: "SECTOR 0",
       subtitle: "중심 구역",
-      position: "center",
-      description: "버뮤다의 심장부. 세 꼭짓점 구역이 모두 이곳으로 통한다. 능력이 극대화되지만 그만큼 코인 소모도 가속된다. 게임 종반, 최후의 결전이 벌어지는 곳.",
+      description: "버뮤다의 심장부. 세 꼭짓점이 모두 이곳으로 통한다. 최종 3인이 남으면 강제로 이곳에 소환된다.",
       features: ["능력 증폭", "코인 소모 가속", "최종 결전지"],
-      danger: "최상",
       color: "#aa5a6a",
+      adminComment: "이곳에서 '진짜 게임'이 시작된다",
     },
     {
       id: "zone-alpha",
       name: "SECTOR α",
       subtitle: "잔해 구역",
-      position: "top",
-      description: "버뮤다 북쪽 꼭짓점. 초기 출현 시 파괴된 건물 잔해가 산처럼 쌓여있다. 고지대를 점령한 자가 유리하지만, 불안정한 지반으로 언제든 무너질 수 있다.",
+      description: "북쪽 꼭짓점. 붕괴된 건물 잔해가 쌓여있다. 고지대 점령이 유리하나 지반이 불안정하다.",
       features: ["고지대", "붕괴 위험", "저격 유리"],
-      danger: "중",
       color: "#4a90a4",
+      adminComment: "무너진 것은 건물만이 아니다",
     },
     {
       id: "zone-beta",
       name: "SECTOR β",
       subtitle: "안개 구역",
-      position: "bottom-left",
-      description: "버뮤다 남서쪽 꼭짓점. 항상 짙은 안개가 끼어있어 시야가 극도로 제한된다. 소리에 의존해야 하며, 기습과 암살에 특화된 죄수들이 선호하는 구역.",
+      description: "남서쪽 꼭짓점. 짙은 안개로 시야가 극도로 제한된다. 소리에 의존해야 한다.",
       features: ["시야 제한", "음향 증폭", "기습 유리"],
-      danger: "상",
       color: "#6a6a8a",
+      adminComment: "안개 속에서 들리는 건 당신의 비명뿐",
     },
     {
       id: "zone-gamma",
       name: "SECTOR γ",
       subtitle: "함정 구역",
-      position: "bottom-right",
-      description: "버뮤다 남동쪽 꼭짓점. 이전 게임에서 탈락한 죄수들이 남긴 함정이 곳곳에 설치되어 있다. 한 발 한 발이 위험하지만, 이를 역으로 이용하는 전략도 가능하다.",
+      description: "남동쪽 꼭짓점. 이전 참가자들이 남긴 함정이 곳곳에 설치되어 있다.",
       features: ["함정 다수", "신중함 필요", "역이용 가능"],
-      danger: "상",
       color: "#9a7a5a",
+      adminComment: "함정을 설치한 자들은 어디로 갔을까?",
     },
   ],
 
-  // 용어집
+  // 용어/규칙
   glossary: [
     {
       term: "버뮤다",
-      definition: "어느 날 갑자기 출현한 삼각형 구역. 죄수들이 강제로 소환되어 최후의 1인이 될 때까지 싸우는 배틀로얄 공간. 외부에서는 관측되지 않는다.",
+      definition: "게임이 진행되는 삼각형 구역. 일단 입장하면 게임 종료까지 탈출 불가능.",
     },
     {
-      term: "죄수",
-      definition: "이능력을 가진 자들의 통칭. 이유는 불명이나 모두 '죄'를 지었다고 판정되어 버뮤다에 소환된다. 최후의 1인만이 해방된다.",
+      term: "참가자",
+      definition: "이능력을 가진 수감자 10명. 각자의 죄에 대한 '속죄'의 기회를 부여받는다.",
     },
     {
       term: "코인",
-      definition: "죄수의 목숨이자 힘의 족쇄. 시작 시 3개가 주어지며 최대 5개까지 보유 가능. 사망 시 1개를 소모하고 부활한다. 0개가 되면 영구 탈락.",
+      definition: "참가자의 목숨. 시작 시 3개, 최대 5개. 사망 시 1개 소모 후 부활. 0개 시 영구 탈락.",
     },
     {
       term: "딜레마",
-      definition: "일정 주기로 코인 4개 미만의 죄수들에게 발동하는 강제 이벤트. 무작위로 매칭된 상대와 협력 또는 배신을 선택해 코인 변동이 일어난다.",
+      definition: "코인 4개 미만인 참가자들에게 주기적으로 발동. 무작위 상대와 협력/배신을 선택.",
     },
     {
       term: "역설",
-      definition: "버뮤다의 핵심 법칙. 코인이 많을수록 능력이 약화되고, 코인이 적을수록 능력이 강화된다. 살기 위해 코인을 모으면 약해지고, 강해지려면 죽음에 가까워야 한다.",
+      definition: "코인이 많을수록 능력이 약해지고, 적을수록 강해진다. 생존과 힘은 양립하지 않는다.",
     },
   ],
 
-  // 규칙
   rules: {
     coinSystem: {
-      title: "코인 시스템",
       items: [
         { coin: 5, state: "과잉", power: "능력 대폭 약화", color: "#4a90a4" },
         { coin: 4, state: "안정", power: "능력 약화", color: "#5a9a7a" },
@@ -242,8 +192,7 @@ const CONFIG = {
       ]
     },
     dilemma: {
-      title: "딜레마 규칙",
-      condition: "코인 4개 미만인 죄수들 대상",
+      condition: "코인 4개 미만 참가자 대상",
       outcomes: [
         { a: "협력", b: "협력", resultA: "+1", resultB: "+1" },
         { a: "배신", b: "배신", resultA: "0", resultB: "0" },
@@ -253,7 +202,6 @@ const CONFIG = {
     }
   },
 
-  // 색상 테마
   theme: {
     primary: "#00f0ff",
     secondary: "#ff3366",
@@ -267,17 +215,13 @@ const CONFIG = {
 };
 
 // ============================================================
-// 🎨 스타일 정의
+// 스타일
 // ============================================================
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
   
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
     --primary: ${CONFIG.theme.primary};
@@ -290,9 +234,7 @@ const styles = `
     --text-dim: ${CONFIG.theme.textDim};
   }
   
-  html {
-    font-size: 16px;
-  }
+  html { font-size: 16px; }
   
   body {
     background: var(--bg);
@@ -302,33 +244,21 @@ const styles = `
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* 스캔라인 */
   .scanlines::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 240, 255, 0.008) 2px,
-      rgba(0, 240, 255, 0.008) 4px
-    );
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px);
     pointer-events: none;
     z-index: 9999;
   }
 
-  /* ==================== 인트로 ==================== */
-  
+  /* 인트로 */
   .intro-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     background: var(--bg);
     display: flex;
     flex-direction: column;
@@ -342,8 +272,7 @@ const styles = `
 
   .skip-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 20px; right: 20px;
     padding: 8px 16px;
     background: transparent;
     border: 1px solid var(--text-dim);
@@ -361,7 +290,7 @@ const styles = `
     color: var(--primary);
   }
 
-  .dilemma-scene {
+  .intro-scene {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -372,18 +301,16 @@ const styles = `
     text-align: center;
   }
 
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+  @keyframes fadeIn { to { opacity: 1; } }
 
-  .dilemma-title {
+  .intro-title {
     font-family: 'Orbitron', monospace;
     font-size: clamp(10px, 3vw, 14px);
     letter-spacing: 4px;
     color: var(--text-dim);
   }
 
-  .dilemma-visual {
+  .intro-visual {
     display: flex;
     align-items: center;
     gap: clamp(20px, 8vw, 60px);
@@ -404,12 +331,12 @@ const styles = `
 
   .prisoner-box.highlight {
     border-color: var(--primary);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0,240,255,0.3);
   }
 
   .prisoner-box.betray {
     border-color: var(--secondary);
-    box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+    box-shadow: 0 0 30px rgba(255,51,102,0.3);
   }
 
   .prisoner-icon {
@@ -435,12 +362,12 @@ const styles = `
   }
 
   .prisoner-choice.cooperate {
-    background: rgba(0, 240, 255, 0.2);
+    background: rgba(0,240,255,0.2);
     color: var(--primary);
   }
 
   .prisoner-choice.betray {
-    background: rgba(255, 51, 102, 0.2);
+    background: rgba(255,51,102,0.2);
     color: var(--secondary);
   }
 
@@ -450,7 +377,7 @@ const styles = `
     color: var(--text-dim);
   }
 
-  .dilemma-result {
+  .intro-result {
     display: flex;
     gap: clamp(40px, 15vw, 100px);
     margin-top: 16px;
@@ -478,7 +405,7 @@ const styles = `
   .result-coins.negative { color: var(--secondary); }
   .result-coins.neutral { color: var(--text-dim); }
 
-  .dilemma-narration {
+  .intro-narration {
     max-width: 500px;
     width: 100%;
     text-align: center;
@@ -488,15 +415,8 @@ const styles = `
     padding: 0 16px;
   }
 
-  .narration-highlight {
-    color: var(--primary);
-    font-weight: 700;
-  }
-
-  .narration-warning {
-    color: var(--secondary);
-    font-weight: 700;
-  }
+  .narration-highlight { color: var(--primary); font-weight: 700; }
+  .narration-warning { color: var(--secondary); font-weight: 700; }
 
   .intro-progress {
     position: absolute;
@@ -506,8 +426,7 @@ const styles = `
   }
 
   .progress-dot {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--text-dim);
     transition: all 0.3s ease;
@@ -533,23 +452,139 @@ const styles = `
     50% { opacity: 1; }
   }
 
-  /* ==================== 메인 레이아웃 ==================== */
-  
+  /* 참가 신청서 */
+  .registration-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .registration-form {
+    background: var(--surface);
+    border: 1px solid var(--primary);
+    max-width: 500px;
+    width: 100%;
+    padding: 0;
+    box-shadow: 0 0 60px rgba(0,240,255,0.2);
+  }
+
+  .registration-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(0,240,255,0.2);
+    position: relative;
+  }
+
+  .registration-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+
+  .registration-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  .registration-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .registration-body {
+    padding: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid rgba(0,240,255,0.2);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(0,240,255,0.2);
+  }
+
+  .form-input::placeholder {
+    color: var(--text-dim);
+  }
+
+  .registration-warning {
+    font-size: 11px;
+    color: var(--secondary);
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.2);
+    line-height: 1.6;
+  }
+
+  .registration-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    border: none;
+    color: var(--bg);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+  }
+
+  .registration-submit:hover {
+    box-shadow: 0 0 30px var(--primary);
+  }
+
+  .registration-submit:disabled {
+    background: var(--text-dim);
+    cursor: not-allowed;
+  }
+
+  /* 메인 */
   .main-container {
     min-height: 100vh;
     opacity: 0;
     transition: opacity 0.8s ease;
   }
 
-  .main-container.visible {
-    opacity: 1;
-  }
+  .main-container.visible { opacity: 1; }
 
   .site-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 60px;
     background: linear-gradient(180deg, var(--bg), transparent);
     display: flex;
@@ -588,14 +623,12 @@ const styles = `
     white-space: nowrap;
   }
 
-  .nav-tab:hover {
-    color: var(--text);
-  }
+  .nav-tab:hover { color: var(--text); }
 
   .nav-tab.active {
     color: var(--primary);
     border-color: var(--primary);
-    background: rgba(0, 240, 255, 0.05);
+    background: rgba(0,240,255,0.05);
   }
 
   .content-area {
@@ -623,107 +656,223 @@ const styles = `
     background: linear-gradient(90deg, var(--text-dim), transparent);
   }
 
-  /* ==================== 캐릭터 그리드 ==================== */
-  
-  .character-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+  /* 관리자 모드 토글 */
+  .admin-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 200;
   }
 
-  .character-card {
+  .admin-btn {
+    width: 40px; height: 40px;
     background: var(--surface);
-    border: 1px solid rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--text-dim);
+    color: var(--text-dim);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .admin-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .admin-btn.active {
+    border-color: var(--secondary);
+    color: var(--secondary);
+    background: rgba(255,51,102,0.1);
+  }
+
+  .admin-modal {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    background: var(--surface);
+    border: 1px solid var(--text-dim);
+    padding: 16px;
+    width: 250px;
+    z-index: 200;
+  }
+
+  .admin-modal-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  .admin-input {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg);
+    border: 1px solid rgba(0,240,255,0.2);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+  }
+
+  .admin-input:focus {
+    border-color: var(--primary);
+  }
+
+  .admin-error {
+    font-size: 11px;
+    color: var(--secondary);
+    margin-top: 8px;
+  }
+
+  .admin-success {
+    font-size: 11px;
+    color: var(--primary);
+    margin-top: 8px;
+  }
+
+  /* 참가자 그리드 */
+  .prisoner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .prisoner-card {
+    background: var(--surface);
+    border: 1px solid rgba(0,240,255,0.1);
     transition: all 0.4s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3/4;
   }
 
-  .character-card::before {
+  .prisoner-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--primary), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
-  .character-card:hover {
+  .prisoner-card:hover {
     border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 240, 255, 0.15);
+    box-shadow: 0 8px 30px rgba(0,240,255,0.15);
   }
 
-  .character-card:hover::before {
+  .prisoner-card:hover::before { opacity: 1; }
+
+  .prisoner-card.user-card {
+    border-color: var(--warning);
+  }
+
+  .prisoner-card.user-card::before {
+    background: linear-gradient(90deg, transparent, var(--warning), transparent);
     opacity: 1;
   }
 
-  .character-image {
-    width: 100%;
-    height: 65%;
-    object-fit: cover;
+  .prisoner-card-header {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .prisoner-card-image {
+    width: 80px;
+    height: 100px;
     background: var(--surface-light);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
-  .character-image img {
+  .prisoner-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .character-placeholder {
+  .prisoner-card-placeholder {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(24px, 8vw, 48px);
+    font-size: 32px;
     color: var(--text-dim);
     opacity: 0.3;
   }
 
-  .character-info {
-    padding: clamp(8px, 2vw, 16px);
-    height: 35%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .prisoner-card-info {
+    flex: 1;
+    min-width: 0;
   }
 
-  .character-codename {
+  .prisoner-card-number {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(6px, 1.5vw, 9px);
+    font-size: 10px;
     letter-spacing: 2px;
     color: var(--primary);
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
 
-  .character-name {
-    font-size: clamp(12px, 3vw, 18px);
+  .prisoner-card-name {
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 2px;
   }
 
-  .character-concept {
-    font-size: clamp(9px, 2vw, 12px);
+  .prisoner-card-alias {
+    font-size: 12px;
     color: var(--text-dim);
     font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 8px;
   }
 
-  /* ==================== 서브컬쳐 스타일 캐릭터 모달 ==================== */
-  
+  .prisoner-card-crime {
+    font-size: 11px;
+    color: var(--secondary);
+    padding: 4px 8px;
+    background: rgba(255,51,102,0.1);
+    display: inline-block;
+  }
+
+  .prisoner-card-intro {
+    padding: 0 16px 16px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* 글리치 코멘트 (관리자 모드) */
+  .glitch-comment {
+    padding: 12px 16px;
+    background: rgba(255,51,102,0.05);
+    border-top: 1px solid rgba(255,51,102,0.2);
+    font-size: 12px;
+    color: var(--secondary);
+    font-family: 'JetBrains Mono', monospace;
+    animation: glitchText 0.1s infinite;
+  }
+
+  @keyframes glitchText {
+    0% { text-shadow: 2px 0 var(--secondary), -2px 0 var(--primary); }
+    25% { text-shadow: -2px 0 var(--secondary), 2px 0 var(--primary); }
+    50% { text-shadow: 2px 0 var(--primary), -2px 0 var(--secondary); }
+    75% { text-shadow: -2px 0 var(--primary), 2px 0 var(--secondary); }
+    100% { text-shadow: 2px 0 var(--secondary), -2px 0 var(--primary); }
+  }
+
+  /* 참가자 상세 모달 */
   .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -733,344 +882,173 @@ const styles = `
     backdrop-filter: blur(10px);
   }
 
-  .char-modal {
+  .prisoner-modal {
     width: 100%;
-    max-width: 900px;
-    max-height: 95vh;
+    max-width: 600px;
+    max-height: 90vh;
     overflow-y: auto;
-    position: relative;
     background: linear-gradient(135deg, #0d0d15 0%, #151520 50%, #0d0d15 100%);
     border: 1px solid var(--primary);
-    box-shadow: 
-      0 0 60px rgba(0, 240, 255, 0.2),
-      inset 0 0 120px rgba(0, 240, 255, 0.03);
+    position: relative;
   }
 
-  .char-modal::before {
+  .prisoner-modal::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
   }
 
-  .char-modal-close {
+  .modal-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.5);
+    top: 16px; right: 16px;
+    width: 40px; height: 40px;
+    background: rgba(0,0,0,0.5);
     border: 1px solid var(--text-dim);
     color: var(--text);
     font-size: 24px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
   }
 
-  .char-modal-close:hover {
+  .modal-close:hover {
     border-color: var(--secondary);
     color: var(--secondary);
-    background: rgba(255, 51, 102, 0.1);
   }
 
-  /* 상단 영역: 캐릭터 이미지 + 기본정보 */
-  .char-modal-top {
+  .modal-header {
     display: flex;
-    gap: 0;
-    min-height: 300px;
+    gap: 20px;
+    padding: 24px;
+    border-bottom: 1px solid rgba(0,240,255,0.1);
   }
 
-  .char-modal-image-section {
-    width: 45%;
-    position: relative;
+  .modal-image {
+    width: 140px;
+    height: 180px;
+    background: var(--surface-light);
+    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     overflow: hidden;
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
   }
 
-  .char-modal-image-section img {
+  .modal-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
   }
 
-  .char-modal-image-section::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-  }
-
-  .char-modal-info-section {
-    width: 55%;
-    padding: 24px;
+  .modal-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
   }
 
-  .char-modal-codename {
+  .modal-number {
     font-family: 'Orbitron', monospace;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 4px;
     color: var(--primary);
     margin-bottom: 8px;
-    text-shadow: 0 0 10px var(--primary);
   }
 
-  .char-modal-name {
-    font-size: clamp(28px, 6vw, 42px);
+  .modal-name {
+    font-size: 28px;
     font-weight: 900;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-bottom: 4px;
   }
 
-  .char-modal-concept {
+  .modal-alias {
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     color: var(--text-dim);
     margin-bottom: 16px;
   }
 
-  .char-modal-crime {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Orbitron', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--secondary);
-    padding: 8px 16px;
-    background: rgba(255, 51, 102, 0.1);
-    border: 1px solid rgba(255, 51, 102, 0.3);
-    margin-bottom: 20px;
-  }
-
-  .char-modal-crime::before {
-    content: '◆';
-    font-size: 8px;
-  }
-
-  .char-modal-quote {
-    font-style: italic;
-    font-size: 13px;
-    color: var(--text-dim);
+  .modal-crime-box {
     padding: 12px 16px;
-    border-left: 2px solid var(--primary);
-    background: rgba(0, 240, 255, 0.03);
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.3);
   }
 
-  /* 스탯 섹션 */
-  .char-modal-stats {
-    padding: 24px;
-    background: rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(0, 240, 255, 0.1);
-    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
-  }
-
-  .stats-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-  }
-
-  .stats-grid {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    flex: 1;
-    min-width: 80px;
-  }
-
-  .stat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-
-  .stat-name {
+  .modal-crime-label {
     font-family: 'Orbitron', monospace;
     font-size: 9px;
-    letter-spacing: 1px;
-    color: var(--text-dim);
-  }
-
-  .stat-value {
-    font-family: 'Orbitron', monospace;
-    font-size: 14px;
-    font-weight: 900;
-    color: var(--primary);
-  }
-
-  .stat-bar {
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    box-shadow: 0 0 10px var(--primary);
-    transition: width 0.8s ease;
-  }
-
-  /* 능력 섹션 */
-  .char-modal-abilities {
-    padding: 24px;
-  }
-
-  .abilities-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .abilities-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--text-dim), transparent);
-  }
-
-  .ability-card {
-    display: flex;
-    gap: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
-    background: rgba(0, 240, 255, 0.03);
-    border: 1px solid rgba(0, 240, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .ability-card:hover {
-    border-color: rgba(0, 240, 255, 0.3);
-    background: rgba(0, 240, 255, 0.05);
-  }
-
-  .ability-card.critical {
-    background: rgba(255, 51, 102, 0.05);
-    border-color: rgba(255, 51, 102, 0.2);
-  }
-
-  .ability-card.critical:hover {
-    border-color: rgba(255, 51, 102, 0.4);
-  }
-
-  .ability-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--primary);
-  }
-
-  .ability-card.critical::before {
-    background: var(--secondary);
-  }
-
-  .ability-coin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 50px;
-  }
-
-  .ability-coin-label {
-    font-family: 'Orbitron', monospace;
-    font-size: 8px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: var(--text-dim);
     margin-bottom: 4px;
   }
 
-  .ability-coin-value {
-    font-family: 'Orbitron', monospace;
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--primary);
-  }
-
-  .ability-card.critical .ability-coin-value {
-    color: var(--secondary);
-    text-shadow: 0 0 20px var(--secondary);
-  }
-
-  .ability-info {
-    flex: 1;
-  }
-
-  .ability-name {
-    font-family: 'Orbitron', monospace;
+  .modal-crime-value {
     font-size: 14px;
+    color: var(--secondary);
     font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
   }
 
-  .ability-desc {
-    font-size: 13px;
+  .modal-sentence {
+    font-size: 11px;
     color: var(--text-dim);
-    line-height: 1.6;
+    margin-top: 4px;
   }
 
-  /* 설명 섹션 */
-  .char-modal-description {
+  .modal-body {
     padding: 24px;
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(0, 240, 255, 0.1);
   }
 
-  .description-title {
+  .modal-section {
+    margin-bottom: 20px;
+  }
+
+  .modal-section-title {
     font-family: 'Orbitron', monospace;
     font-size: 10px;
     letter-spacing: 3px;
     color: var(--text-dim);
     margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,240,255,0.1);
   }
 
-  .description-text {
+  .modal-ability {
+    padding: 16px;
+    background: rgba(0,240,255,0.03);
+    border-left: 3px solid var(--primary);
     font-size: 14px;
-    line-height: 1.9;
-    color: var(--text);
+    line-height: 1.6;
   }
 
-  /* ==================== 세계관 탭 ==================== */
-  
-  .world-section {
-    margin-bottom: 40px;
+  .modal-intro {
+    font-size: 15px;
+    line-height: 1.8;
+    font-style: italic;
+    color: var(--text);
+    padding: 16px;
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--text-dim);
   }
+
+  .modal-glitch {
+    padding: 16px;
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.3);
+    font-size: 13px;
+    color: var(--secondary);
+    font-family: 'JetBrains Mono', monospace;
+    animation: glitchText 0.1s infinite;
+    margin-top: 20px;
+  }
+
+  /* 세계관 탭 */
+  .world-section { margin-bottom: 40px; }
 
   .world-section-title {
     font-family: 'Orbitron', monospace;
@@ -1079,12 +1057,12 @@ const styles = `
     color: var(--primary);
     margin-bottom: 16px;
     padding-bottom: 8px;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    border-bottom: 1px solid rgba(0,240,255,0.2);
   }
 
   .glossary-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
   }
 
@@ -1096,14 +1074,14 @@ const styles = `
 
   .glossary-term {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(12px, 3vw, 14px);
+    font-size: 14px;
     font-weight: 700;
     color: var(--primary);
     margin-bottom: 6px;
   }
 
   .glossary-def {
-    font-size: clamp(12px, 3vw, 13px);
+    font-size: 13px;
     line-height: 1.7;
     color: var(--text-dim);
   }
@@ -1123,24 +1101,24 @@ const styles = `
   .dilemma-table td {
     padding: 10px 12px;
     text-align: center;
-    border: 1px solid rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0,240,255,0.1);
   }
 
   .dilemma-table th {
     background: var(--surface);
     font-family: 'Orbitron', monospace;
-    font-size: clamp(8px, 2vw, 10px);
+    font-size: 10px;
     letter-spacing: 1px;
     color: var(--text-dim);
   }
 
   .dilemma-table td {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(11px, 2.5vw, 13px);
+    font-size: 13px;
   }
 
   .dilemma-condition {
-    font-size: clamp(11px, 2.5vw, 12px);
+    font-size: 12px;
     color: var(--warning);
     margin-bottom: 12px;
     font-family: 'JetBrains Mono', monospace;
@@ -1162,31 +1140,28 @@ const styles = `
     transition: all 0.3s ease;
   }
 
-  .coin-row:hover {
-    background: var(--surface-light);
-  }
+  .coin-row:hover { background: var(--surface-light); }
 
   .coin-number {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(18px, 5vw, 24px);
+    font-size: 24px;
     font-weight: 900;
     min-width: 32px;
   }
 
   .coin-state {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(9px, 2vw, 11px);
+    font-size: 11px;
     letter-spacing: 1px;
     min-width: 50px;
   }
 
   .coin-power {
-    font-size: clamp(11px, 2.5vw, 13px);
+    font-size: 13px;
     color: var(--text-dim);
   }
 
-  /* ==================== 마름모 지도 ==================== */
-  
+  /* 지도 */
   .map-container {
     display: flex;
     flex-direction: column;
@@ -1194,19 +1169,18 @@ const styles = `
     gap: 24px;
   }
 
-  .diamond-map {
+  .map-visual {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     aspect-ratio: 1;
-    position: relative;
   }
 
-  .diamond-map svg {
+  .map-visual svg {
     width: 100%;
     height: 100%;
   }
 
-  .diamond-outline {
+  .map-outline {
     fill: none;
     stroke: var(--primary);
     stroke-width: 2;
@@ -1214,25 +1188,25 @@ const styles = `
   }
 
   .zone-cell {
-    fill: rgba(0, 240, 255, 0.05);
-    stroke: rgba(0, 240, 255, 0.2);
+    fill: rgba(0,240,255,0.05);
+    stroke: rgba(0,240,255,0.2);
     stroke-width: 1;
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
   .zone-cell:hover {
-    fill: rgba(0, 240, 255, 0.15);
+    fill: rgba(0,240,255,0.15);
     stroke: var(--primary);
   }
 
   .zone-cell.active {
-    fill: rgba(0, 240, 255, 0.2);
+    fill: rgba(0,240,255,0.2);
     stroke: var(--primary);
     stroke-width: 2;
   }
 
-  .zone-number {
+  .zone-label {
     font-family: 'Orbitron', monospace;
     font-size: 16px;
     font-weight: 700;
@@ -1241,63 +1215,39 @@ const styles = `
     pointer-events: none;
   }
 
-  .zone-subtitle {
+  .zone-sublabel {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 9px;
+    font-size: 10px;
     fill: var(--text-dim);
     text-anchor: middle;
     pointer-events: none;
   }
 
-  .map-legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .legend-color {
-    width: 12px;
-    height: 12px;
-  }
-
-  /* 구역 상세 모달 */
+  /* 구역 모달 */
   .zone-modal {
     background: linear-gradient(135deg, #0d0d15, #151520);
     border: 1px solid var(--primary);
     max-width: 500px;
     width: 100%;
-    padding: 0;
     position: relative;
-    box-shadow: 0 0 60px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 60px rgba(0,240,255,0.2);
   }
 
   .zone-modal-header {
     padding: 24px;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    border-bottom: 1px solid rgba(0,240,255,0.2);
     position: relative;
   }
 
   .zone-modal-header::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--primary), transparent);
   }
 
-  .zone-modal-number {
+  .zone-modal-symbol {
     font-family: 'Orbitron', monospace;
     font-size: 48px;
     font-weight: 900;
@@ -1339,42 +1289,27 @@ const styles = `
   .zone-feature {
     font-size: 11px;
     padding: 6px 12px;
-    background: rgba(0, 240, 255, 0.1);
+    background: rgba(0,240,255,0.1);
     color: var(--primary);
     font-family: 'JetBrains Mono', monospace;
-    border: 1px solid rgba(0, 240, 255, 0.2);
+    border: 1px solid rgba(0,240,255,0.2);
   }
 
-  .zone-modal-danger {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255, 51, 102, 0.1);
-    border: 1px solid rgba(255, 51, 102, 0.2);
-  }
-
-  .zone-danger-label {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-  }
-
-  .zone-danger-value {
-    font-family: 'Orbitron', monospace;
-    font-size: 14px;
-    font-weight: 700;
+  .zone-modal-glitch {
+    padding: 16px;
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.3);
+    font-size: 13px;
     color: var(--secondary);
+    font-family: 'JetBrains Mono', monospace;
+    animation: glitchText 0.1s infinite;
   }
 
   .zone-modal-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
-    background: rgba(0, 0, 0, 0.8);
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    background: rgba(0,0,0,0.8);
     border: 1px solid var(--text-dim);
     color: var(--text);
     font-size: 20px;
@@ -1382,8 +1317,8 @@ const styles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
     z-index: 100;
+    transition: all 0.3s ease;
   }
 
   .zone-modal-close:hover {
@@ -1391,71 +1326,19 @@ const styles = `
     color: var(--secondary);
   }
 
-  /* ==================== 반응형 ==================== */
-  
-  @media (min-width: 640px) {
-    .glossary-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .content-area {
-      padding: 100px 24px 40px;
-    }
-    
-    .site-header {
-      padding: 0 24px;
-      height: 70px;
-    }
-    
-    .nav-tab {
-      padding: 10px 20px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .character-grid {
-      gap: 20px;
-    }
-    
-    .content-area {
-      padding: 100px 40px 40px;
-    }
-    
-    .site-header {
-      padding: 0 40px;
-    }
-  }
-
+  /* 반응형 */
   @media (max-width: 640px) {
-    .char-modal-top {
+    .modal-header {
       flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
     
-    .char-modal-image-section {
-      width: 100%;
-      height: 250px;
+    .prisoner-grid {
+      grid-template-columns: 1fr;
     }
     
-    .char-modal-info-section {
-      width: 100%;
-    }
-    
-    .stats-grid {
-      gap: 12px;
-    }
-    
-    .stat-item {
-      min-width: 60px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .character-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-    
-    .dilemma-visual {
+    .intro-visual {
       flex-direction: column;
       gap: 20px;
     }
@@ -1463,26 +1346,31 @@ const styles = `
     .vs-text {
       margin: 10px 0;
     }
-    
-    .dilemma-result {
-      gap: 60px;
-    }
   }
 `;
 
 // ============================================================
-// 🎬 컴포넌트
+// 컴포넌트
 // ============================================================
 
+// F12 콘솔에 암호화된 비밀번호 출력
+const logEncryptedPassword = () => {
+  const encoded = btoa(CONFIG.adminPassword);
+  console.log('%c[SYSTEM] ENCRYPTED_KEY: ' + encoded, 'color: #ff3366; font-family: monospace;');
+  console.log('%c해독하려면 atob() 함수를 사용하세요.', 'color: #666; font-size: 10px;');
+};
+
 // 인트로
-function DilemmaIntro({ onComplete }) {
+function IntroScreen({ onComplete }) {
   const [step, setStep] = useState(0);
-  const totalSteps = 6;
+  
+  useEffect(() => {
+    logEncryptedPassword();
+  }, []);
 
   const handleClick = (e) => {
     if (e.target.classList.contains('skip-btn')) return;
-    
-    if (step < totalSteps - 1) {
+    if (step < 5) {
       setStep(s => s + 1);
     } else {
       onComplete();
@@ -1491,69 +1379,34 @@ function DilemmaIntro({ onComplete }) {
 
   const scenes = [
     {
-      title: "PRISONER'S DILEMMA",
+      title: "PRISONER'S GAME",
       visual: null,
-      narration: (
-        <>
-          이것은 <span className="narration-highlight">신뢰</span>와{' '}
-          <span className="narration-warning">배신</span>의 게임.
-        </>
-      ),
+      narration: <>당신은 <span className="narration-warning">죄인</span>입니다.<br/>이능력을 가진 <span className="narration-highlight">10명의 수감자</span>가 이 게임에 참가합니다.</>,
     },
     {
-      title: "CASE 01",
+      title: "THE DILEMMA",
       visual: { choiceA: 'cooperate', choiceB: 'cooperate', resultA: '+1', resultB: '+1' },
-      narration: (
-        <>
-          둘 다 <span className="narration-highlight">협력</span>하면,
-          <br />서로 코인을 1개씩 얻는다.
-        </>
-      ),
+      narration: <>둘 다 <span className="narration-highlight">협력</span>하면, 서로 코인을 1개씩 얻습니다.</>,
     },
     {
-      title: "CASE 02",
-      visual: { choiceA: 'betray', choiceB: 'betray', resultA: '0', resultB: '0' },
-      narration: (
-        <>
-          둘 다 <span className="narration-warning">배신</span>하면,
-          <br />아무도 얻지 못한다.
-        </>
-      ),
-    },
-    {
-      title: "CASE 03",
+      title: "THE DILEMMA",
       visual: { choiceA: 'betray', choiceB: 'cooperate', resultA: '+2', resultB: '-1' },
-      narration: (
-        <>
-          한 명만 <span className="narration-warning">배신</span>하면,
-          <br />배신자는 2개를 얻고, 협력자는 1개를 잃는다.
-        </>
-      ),
+      narration: <>한 명만 <span className="narration-warning">배신</span>하면,<br/>배신자는 2개를 얻고, 협력자는 1개를 잃습니다.</>,
     },
     {
       title: "THE PARADOX",
       visual: null,
-      narration: (
-        <>
-          하지만 이 게임엔 <span className="narration-warning">역설</span>이 있다.
-          <br /><br />
-          <span className="narration-highlight">코인이 많을수록 약해지고,</span>
-          <br />
-          <span className="narration-warning">코인이 적을수록 강해진다.</span>
-        </>
-      ),
+      narration: <><span className="narration-highlight">코인이 많을수록 약해지고,</span><br/><span className="narration-warning">코인이 적을수록 강해집니다.</span><br/><br/>생존과 힘은 양립하지 않습니다.</>,
     },
     {
       title: "THE RULE",
       visual: null,
-      narration: (
-        <>
-          살기 위해 코인을 모으면 약해지고,
-          <br />강해지려면 죽음에 가까워야 한다.
-          <br /><br />
-          <span className="narration-highlight">DON'T LOSE YOURSELF.</span>
-        </>
-      ),
+      narration: <>최후의 <span className="narration-highlight">1인</span>만이 이 게임에서 해방됩니다.<br/><br/><span className="narration-warning">참가를 거부할 권리는 없습니다.</span></>,
+    },
+    {
+      title: "AGREEMENT",
+      visual: null,
+      narration: <>다음 페이지에서 <span className="narration-highlight">참가 신청서</span>를 작성해주세요.<br/><br/><span className="narration-warning">DON'T LOSE YOURSELF.</span></>,
     },
   ];
 
@@ -1563,12 +1416,12 @@ function DilemmaIntro({ onComplete }) {
     <div className="intro-container" onClick={handleClick}>
       <button className="skip-btn" onClick={onComplete}>SKIP →</button>
       
-      <div className="dilemma-scene" key={step}>
-        <div className="dilemma-title">{currentScene.title}</div>
+      <div className="intro-scene" key={step}>
+        <div className="intro-title">{currentScene.title}</div>
         
         {currentScene.visual && (
           <>
-            <div className="dilemma-visual">
+            <div className="intro-visual">
               <div className={`prisoner-box ${currentScene.visual.choiceA === 'cooperate' ? 'highlight' : 'betray'}`}>
                 <div className="prisoner-icon">◈</div>
                 <div className="prisoner-label">PRISONER A</div>
@@ -1576,9 +1429,7 @@ function DilemmaIntro({ onComplete }) {
                   {currentScene.visual.choiceA === 'cooperate' ? '협력' : '배신'}
                 </div>
               </div>
-              
               <div className="vs-text">VS</div>
-              
               <div className={`prisoner-box ${currentScene.visual.choiceB === 'cooperate' ? 'highlight' : 'betray'}`}>
                 <div className="prisoner-icon">◈</div>
                 <div className="prisoner-label">PRISONER B</div>
@@ -1587,21 +1438,14 @@ function DilemmaIntro({ onComplete }) {
                 </div>
               </div>
             </div>
-            
-            <div className="dilemma-result">
+            <div className="intro-result">
               <div className="result-box visible">
-                <div className={`result-coins ${
-                  currentScene.visual.resultA.startsWith('+') ? 'positive' : 
-                  currentScene.visual.resultA.startsWith('-') ? 'negative' : 'neutral'
-                }`}>
+                <div className={`result-coins ${currentScene.visual.resultA.startsWith('+') ? 'positive' : currentScene.visual.resultA.startsWith('-') ? 'negative' : 'neutral'}`}>
                   {currentScene.visual.resultA}
                 </div>
               </div>
               <div className="result-box visible">
-                <div className={`result-coins ${
-                  currentScene.visual.resultB.startsWith('+') ? 'positive' : 
-                  currentScene.visual.resultB.startsWith('-') ? 'negative' : 'neutral'
-                }`}>
+                <div className={`result-coins ${currentScene.visual.resultB.startsWith('+') ? 'positive' : currentScene.visual.resultB.startsWith('-') ? 'negative' : 'neutral'}`}>
                   {currentScene.visual.resultB}
                 </div>
               </div>
@@ -1609,182 +1453,206 @@ function DilemmaIntro({ onComplete }) {
           </>
         )}
         
-        <div className="dilemma-narration">
-          {currentScene.narration}
-        </div>
+        <div className="intro-narration">{currentScene.narration}</div>
       </div>
       
       <div className="tap-hint">TAP TO CONTINUE</div>
-      
       <div className="intro-progress">
-        {scenes.map((_, i) => (
-          <div key={i} className={`progress-dot ${i <= step ? 'active' : ''}`} />
-        ))}
+        {scenes.map((_, i) => <div key={i} className={`progress-dot ${i <= step ? 'active' : ''}`} />)}
       </div>
     </div>
   );
 }
 
-// 캐릭터 카드
-function CharacterCard({ character, onClick }) {
-  const imageSrc = character.image ? `${CONFIG.imageBasePath}${character.image}.png` : null;
+// 참가 신청서
+function RegistrationForm({ onSubmit }) {
+  const [name, setName] = useState('');
+  const [ability, setAbility] = useState('');
+  const [intro, setIntro] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (name && ability && intro) {
+      onSubmit({ name, ability, intro });
+    }
+  };
+
+  const isValid = name.trim() && ability.trim() && intro.trim();
+
+  return (
+    <div className="registration-container">
+      <form className="registration-form" onSubmit={handleSubmit}>
+        <div className="registration-header">
+          <div className="registration-title">참가 신청서</div>
+          <div className="registration-subtitle">PRISONER REGISTRATION FORM</div>
+        </div>
+        <div className="registration-body">
+          <div className="form-group">
+            <label className="form-label">이름 (닉네임)</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              placeholder="본명 또는 닉네임을 입력하세요"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              maxLength={20}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">능력</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              placeholder="당신의 이능력을 간단히 설명하세요"
+              value={ability}
+              onChange={(e) => setAbility(e.target.value)}
+              maxLength={50}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">자기소개 (한 줄)</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              placeholder="다른 참가자들에게 할 말"
+              value={intro}
+              onChange={(e) => setIntro(e.target.value)}
+              maxLength={100}
+            />
+          </div>
+          <div className="registration-warning">
+            ※ 경고: 본 신청서 제출 시 게임 참가에 동의한 것으로 간주됩니다.<br/>
+            참가 철회는 불가능하며, 모든 결과는 본인에게 귀속됩니다.
+          </div>
+          <button type="submit" className="registration-submit" disabled={!isValid}>
+            참가 동의 및 제출
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+// 참가자 카드
+function PrisonerCard({ prisoner, isUser, onClick, isAdmin }) {
+  const imageSrc = prisoner.id ? `${CONFIG.imageBasePath}${prisoner.id}.png` : null;
   
   return (
-    <div className="character-card" onClick={onClick}>
-      <div className="character-image">
-        {imageSrc ? (
-          <img src={imageSrc} alt={character.name} />
-        ) : (
-          <div className="character-placeholder">?</div>
-        )}
+    <div className={`prisoner-card ${isUser ? 'user-card' : ''}`} onClick={onClick}>
+      <div className="prisoner-card-header">
+        <div className="prisoner-card-image">
+          {imageSrc && !isUser ? (
+            <img src={imageSrc} alt={prisoner.name} />
+          ) : (
+            <div className="prisoner-card-placeholder">{prisoner.number}</div>
+          )}
+        </div>
+        <div className="prisoner-card-info">
+          <div className="prisoner-card-number">PRISONER #{prisoner.number}</div>
+          <div className="prisoner-card-name">{prisoner.name}</div>
+          <div className="prisoner-card-alias">{prisoner.alias || '별칭 없음'}</div>
+          <div className="prisoner-card-crime">{prisoner.crime}</div>
+        </div>
       </div>
-      <div className="character-info">
-        <div className="character-codename">{character.codename}</div>
-        <div className="character-name">{character.name}</div>
-        <div className="character-concept">{character.concept}</div>
-      </div>
+      <div className="prisoner-card-intro">"{prisoner.selfIntro}"</div>
+      {isAdmin && prisoner.adminComment && (
+        <div className="glitch-comment">⚠ {prisoner.adminComment}</div>
+      )}
     </div>
   );
 }
 
-// 서브컬쳐 스타일 캐릭터 모달
-function CharacterModal({ character, onClose }) {
-  if (!character) return null;
+// 참가자 상세 모달
+function PrisonerModal({ prisoner, isUser, onClose, isAdmin }) {
+  if (!prisoner) return null;
   
-  const imageSrc = character.image ? `${CONFIG.imageBasePath}${character.image}.png` : null;
-  
+  const imageSrc = prisoner.id ? `${CONFIG.imageBasePath}${prisoner.id}.png` : null;
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, []);
-  
+
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="char-modal" onClick={e => e.stopPropagation()}>
-        <button className="char-modal-close" onClick={onClose}>×</button>
+      <div className="prisoner-modal" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
         
-        {/* 상단: 이미지 + 기본정보 */}
-        <div className="char-modal-top">
-          <div className="char-modal-image-section">
-            {imageSrc ? (
-              <img src={imageSrc} alt={character.name} />
+        <div className="modal-header">
+          <div className="modal-image">
+            {imageSrc && !isUser ? (
+              <img src={imageSrc} alt={prisoner.name} />
             ) : (
-              <div style={{ 
-                width: '100%', 
-                height: '100%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                background: 'var(--surface-light)',
-                fontSize: '64px',
-                color: 'var(--text-dim)',
-                opacity: 0.3
-              }}>?</div>
+              <div style={{ fontSize: '48px', color: 'var(--text-dim)', opacity: 0.3 }}>{prisoner.number}</div>
             )}
           </div>
-          <div className="char-modal-info-section">
-            <div className="char-modal-codename">{character.codename}</div>
-            <div className="char-modal-name">{character.name}</div>
-            <div className="char-modal-concept">{character.concept}</div>
-            <div className="char-modal-crime">죄목: {character.crime}</div>
-            <div className="char-modal-quote">{character.quote}</div>
+          <div className="modal-info">
+            <div className="modal-number">PRISONER #{prisoner.number}</div>
+            <div className="modal-name">{prisoner.name}</div>
+            <div className="modal-alias">{prisoner.alias || '별칭 없음'}</div>
+            <div className="modal-crime-box">
+              <div className="modal-crime-label">죄명</div>
+              <div className="modal-crime-value">{prisoner.crime}</div>
+              {prisoner.sentence && <div className="modal-sentence">형량: {prisoner.sentence}</div>}
+            </div>
           </div>
         </div>
         
-        {/* 스탯 */}
-        {character.stats && (
-          <div className="char-modal-stats">
-            <div className="stats-title">PARAMETERS</div>
-            <div className="stats-grid">
-              {Object.entries(character.stats).map(([key, value]) => (
-                <div key={key} className="stat-item">
-                  <div className="stat-header">
-                    <span className="stat-name">{key.toUpperCase()}</span>
-                    <span className="stat-value">{value}</span>
-                  </div>
-                  <div className="stat-bar">
-                    <div className="stat-bar-fill" style={{ width: `${value * 10}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="modal-body">
+          <div className="modal-section">
+            <div className="modal-section-title">ABILITY</div>
+            <div className="modal-ability">{prisoner.ability}</div>
           </div>
-        )}
-        
-        {/* 능력 */}
-        <div className="char-modal-abilities">
-          <div className="abilities-title">ABILITIES</div>
-          {character.abilities.map((ability, idx) => (
-            <div key={idx} className={`ability-card ${ability.stage === 1 ? 'critical' : ''}`}>
-              <div className="ability-coin">
-                <div className="ability-coin-label">COIN</div>
-                <div className="ability-coin-value">{ability.stage}</div>
-              </div>
-              <div className="ability-info">
-                <div className="ability-name">{ability.name}</div>
-                <div className="ability-desc">{ability.desc}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* 설명 */}
-        <div className="char-modal-description">
-          <div className="description-title">PROFILE</div>
-          <div className="description-text">{character.description}</div>
+          
+          <div className="modal-section">
+            <div className="modal-section-title">SELF INTRODUCTION</div>
+            <div className="modal-intro">"{prisoner.selfIntro}"</div>
+          </div>
+          
+          {isAdmin && prisoner.adminComment && (
+            <div className="modal-glitch">⚠ CLASSIFIED: {prisoner.adminComment}</div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-// 구역 상세 모달
-function ZoneModal({ zone, onClose }) {
+// 구역 모달
+function ZoneModal({ zone, onClose, isAdmin }) {
   if (!zone) return null;
   
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
-  
-  // 구역 라벨 매핑
   const zoneLabels = {
     'zone-center': '0',
     'zone-alpha': 'α',
     'zone-beta': 'β',
     'zone-gamma': 'γ',
   };
-  
-  const zoneLabel = zoneLabels[zone.id] || zone.id;
-  
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="zone-modal" onClick={e => e.stopPropagation()}>
         <button className="zone-modal-close" onClick={onClose}>×</button>
         
         <div className="zone-modal-header">
-          <div className="zone-modal-number">{zoneLabel}</div>
+          <div className="zone-modal-symbol">{zoneLabels[zone.id]}</div>
           <div className="zone-modal-name">{zone.name}</div>
           <div className="zone-modal-subtitle">{zone.subtitle}</div>
         </div>
         
         <div className="zone-modal-body">
           <div className="zone-modal-desc">{zone.description}</div>
-          
           <div className="zone-modal-features">
-            {zone.features.map((feature, idx) => (
-              <span key={idx} className="zone-feature">{feature}</span>
-            ))}
+            {zone.features.map((f, i) => <span key={i} className="zone-feature">{f}</span>)}
           </div>
-          
-          <div className="zone-modal-danger">
-            <span className="zone-danger-label">위험도</span>
-            <span className="zone-danger-value">{zone.danger}</span>
-          </div>
+          {isAdmin && zone.adminComment && (
+            <div className="zone-modal-glitch">⚠ {zone.adminComment}</div>
+          )}
         </div>
       </div>
     </div>
@@ -1813,24 +1681,15 @@ function WorldTab() {
         <div className="dilemma-table-wrapper">
           <table className="dilemma-table">
             <thead>
-              <tr>
-                <th>A</th>
-                <th>B</th>
-                <th>A 결과</th>
-                <th>B 결과</th>
-              </tr>
+              <tr><th>A</th><th>B</th><th>A 결과</th><th>B 결과</th></tr>
             </thead>
             <tbody>
               {CONFIG.rules.dilemma.outcomes.map((row, idx) => (
                 <tr key={idx}>
                   <td style={{ color: row.a === '협력' ? '#00f0ff' : '#ff3366' }}>{row.a}</td>
                   <td style={{ color: row.b === '협력' ? '#00f0ff' : '#ff3366' }}>{row.b}</td>
-                  <td style={{ color: row.resultA.startsWith('+') ? '#00f0ff' : row.resultA.startsWith('-') ? '#ff3366' : '#666' }}>
-                    {row.resultA}
-                  </td>
-                  <td style={{ color: row.resultB.startsWith('+') ? '#00f0ff' : row.resultB.startsWith('-') ? '#ff3366' : '#666' }}>
-                    {row.resultB}
-                  </td>
+                  <td style={{ color: row.resultA.startsWith('+') ? '#00f0ff' : row.resultA.startsWith('-') ? '#ff3366' : '#666' }}>{row.resultA}</td>
+                  <td style={{ color: row.resultB.startsWith('+') ? '#00f0ff' : row.resultB.startsWith('-') ? '#ff3366' : '#666' }}>{row.resultB}</td>
                 </tr>
               ))}
             </tbody>
@@ -1842,11 +1701,7 @@ function WorldTab() {
         <div className="world-section-title">COIN SYSTEM</div>
         <div className="coin-system">
           {CONFIG.rules.coinSystem.items.map((item, idx) => (
-            <div 
-              key={idx} 
-              className="coin-row"
-              style={{ borderLeftColor: item.color }}
-            >
+            <div key={idx} className="coin-row" style={{ borderLeftColor: item.color }}>
               <div className="coin-number" style={{ color: item.color }}>{item.coin}</div>
               <div className="coin-state" style={{ color: item.color }}>{item.state}</div>
               <div className="coin-power">{item.power}</div>
@@ -1858,206 +1713,214 @@ function WorldTab() {
   );
 }
 
-// 삼각형 지도 탭 (4구역)
-function MapTab() {
+// 지도 탭
+function MapTab({ isAdmin }) {
   const [selectedZone, setSelectedZone] = useState(null);
   
-  // 삼각형 좌표
   const points = {
     top: { x: 200, y: 50 },
     bottomLeft: { x: 50, y: 350 },
     bottomRight: { x: 350, y: 350 },
   };
   
-  // 각 변의 중점
   const midpoints = {
     left: { x: (points.top.x + points.bottomLeft.x) / 2, y: (points.top.y + points.bottomLeft.y) / 2 },
     right: { x: (points.top.x + points.bottomRight.x) / 2, y: (points.top.y + points.bottomRight.y) / 2 },
     bottom: { x: (points.bottomLeft.x + points.bottomRight.x) / 2, y: (points.bottomLeft.y + points.bottomRight.y) / 2 },
   };
   
-  // 중심점
   const center = {
     x: (points.top.x + points.bottomLeft.x + points.bottomRight.x) / 3,
     y: (points.top.y + points.bottomLeft.y + points.bottomRight.y) / 3,
   };
   
-  // 4개 구역 경로
   const zonePaths = [
-    // 중앙 (역삼각형)
-    {
-      id: "zone-center",
-      path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
-      labelPos: { x: center.x, y: center.y + 10 },
-      label: "0",
-      sublabel: "중심"
-    },
-    // 상단 꼭짓점 (α)
-    {
-      id: "zone-alpha",
-      path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`,
-      labelPos: { x: points.top.x, y: points.top.y + 70 },
-      label: "α",
-      sublabel: "잔해"
-    },
-    // 좌하단 꼭짓점 (β)
-    {
-      id: "zone-beta",
-      path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
-      labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 50 },
-      label: "β",
-      sublabel: "안개"
-    },
-    // 우하단 꼭짓점 (γ)
-    {
-      id: "zone-gamma",
-      path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`,
-      labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 50 },
-      label: "γ",
-      sublabel: "함정"
-    },
+    { id: "zone-center", path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: center.x, y: center.y + 10 }, label: "0", sublabel: "중심" },
+    { id: "zone-alpha", path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`, labelPos: { x: points.top.x, y: points.top.y + 70 }, label: "α", sublabel: "잔해" },
+    { id: "zone-beta", path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 50 }, label: "β", sublabel: "안개" },
+    { id: "zone-gamma", path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 50 }, label: "γ", sublabel: "함정" },
   ];
-  
+
   return (
     <div className="map-container">
-      <div className="diamond-map">
+      <div className="map-visual">
         <svg viewBox="0 0 400 400">
-          {/* 외곽 삼각형 */}
-          <path
-            className="diamond-outline"
-            d={`M ${points.top.x} ${points.top.y} L ${points.bottomLeft.x} ${points.bottomLeft.y} L ${points.bottomRight.x} ${points.bottomRight.y} Z`}
-          />
+          <path className="map-outline" d={`M ${points.top.x} ${points.top.y} L ${points.bottomLeft.x} ${points.bottomLeft.y} L ${points.bottomRight.x} ${points.bottomRight.y} Z`} />
           
-          {/* 4개 구역 */}
-          {zonePaths.map((zoneData, idx) => {
+          {zonePaths.map((zoneData) => {
             const zone = CONFIG.bermudaZones.find(z => z.id === zoneData.id);
             if (!zone) return null;
-            
             return (
               <g key={zone.id} onClick={() => setSelectedZone(zone)} style={{ cursor: 'pointer' }}>
-                <path
-                  className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`}
-                  d={zoneData.path}
-                  style={{ fill: `${zone.color}44` }}
-                />
-                <text className="zone-number" x={zoneData.labelPos.x} y={zoneData.labelPos.y}>
-                  {zoneData.label}
-                </text>
-                <text className="zone-subtitle" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 16}>
-                  {zoneData.sublabel}
-                </text>
+                <path className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`} d={zoneData.path} style={{ fill: `${zone.color}44` }} />
+                <text className="zone-label" x={zoneData.labelPos.x} y={zoneData.labelPos.y}>{zoneData.label}</text>
+                <text className="zone-sublabel" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 16}>{zoneData.sublabel}</text>
               </g>
             );
           })}
           
-          {/* 내부 경계선 */}
           <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.right.x} y2={midpoints.right.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
           <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
           <line x1={midpoints.right.x} y1={midpoints.right.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
         </svg>
       </div>
       
-      <div className="map-legend">
-        <div className="legend-item">
-          <div className="legend-color" style={{ background: '#4a90a4' }} />
-          <span>중</span>
+      {selectedZone && <ZoneModal zone={selectedZone} onClose={() => setSelectedZone(null)} isAdmin={isAdmin} />}
+    </div>
+  );
+}
+
+// 관리자 토글
+function AdminToggle({ isAdmin, onToggle }) {
+  const [showModal, setShowModal] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = () => {
+    if (password === CONFIG.adminPassword) {
+      onToggle(true);
+      setShowModal(false);
+      setError('');
+    } else {
+      setError('ACCESS DENIED');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') handleSubmit();
+  };
+
+  return (
+    <div className="admin-toggle">
+      {showModal && !isAdmin && (
+        <div className="admin-modal">
+          <div className="admin-modal-title">ADMIN ACCESS</div>
+          <input 
+            className="admin-input"
+            type="password"
+            placeholder="PASSWORD"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
+            autoFocus
+          />
+          {error && <div className="admin-error">{error}</div>}
         </div>
-        <div className="legend-item">
-          <div className="legend-color" style={{ background: '#6a6a8a' }} />
-          <span>상</span>
-        </div>
-        <div className="legend-item">
-          <div className="legend-color" style={{ background: '#aa5a6a' }} />
-          <span>최상</span>
-        </div>
-      </div>
-      
-      {selectedZone && (
-        <ZoneModal zone={selectedZone} onClose={() => setSelectedZone(null)} />
       )}
+      {isAdmin && showModal && (
+        <div className="admin-modal">
+          <div className="admin-success">ADMIN MODE ACTIVE</div>
+        </div>
+      )}
+      <button 
+        className={`admin-btn ${isAdmin ? 'active' : ''}`}
+        onClick={() => {
+          if (isAdmin) {
+            onToggle(false);
+            setShowModal(false);
+          } else {
+            setShowModal(!showModal);
+          }
+        }}
+      >
+        ⚙
+      </button>
     </div>
   );
 }
 
 // 메인 앱
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [activeTab, setActiveTab] = useState('characters');
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [phase, setPhase] = useState('intro'); // intro -> registration -> main
+  const [userData, setUserData] = useState(null);
+  const [activeTab, setActiveTab] = useState('prisoners');
+  const [selectedPrisoner, setSelectedPrisoner] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [mainVisible, setMainVisible] = useState(false);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
+  const handleRegistration = (data) => {
+    setUserData(data);
+    setPhase('main');
     setTimeout(() => setMainVisible(true), 100);
   };
+
+  // 유저 포함 전체 참가자 목록
+  const allPrisoners = [
+    ...CONFIG.prisoners,
+    userData ? {
+      id: null,
+      number: "10",
+      name: userData.name,
+      alias: null,
+      crime: "미확정",
+      sentence: "미확정",
+      ability: userData.ability,
+      selfIntro: userData.intro,
+      adminComment: "새로운 참가자. 아직 아무것도 증명되지 않았다.",
+    } : null,
+  ].filter(Boolean);
 
   return (
     <>
       <style>{styles}</style>
       <div className="scanlines">
-        {showIntro && <DilemmaIntro onComplete={handleIntroComplete} />}
+        {phase === 'intro' && <IntroScreen onComplete={() => setPhase('registration')} />}
+        {phase === 'registration' && <RegistrationForm onSubmit={handleRegistration} />}
         
-        <div className={`main-container ${mainVisible ? 'visible' : ''}`}>
-          <header className="site-header">
-            <div className="logo">{CONFIG.siteTitle}</div>
-            <nav className="nav-tabs">
-              <button 
-                className={`nav-tab ${activeTab === 'characters' ? 'active' : ''}`}
-                onClick={() => setActiveTab('characters')}
-              >
-                PRISONERS
-              </button>
-              <button 
-                className={`nav-tab ${activeTab === 'world' ? 'active' : ''}`}
-                onClick={() => setActiveTab('world')}
-              >
-                RULES
-              </button>
-              <button 
-                className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`}
-                onClick={() => setActiveTab('map')}
-              >
-                BERMUDA
-              </button>
-            </nav>
-          </header>
-          
-          <main className="content-area">
-            {activeTab === 'characters' && (
-              <>
-                <div className="section-title">REGISTERED PRISONERS</div>
-                <div className="character-grid">
-                  {CONFIG.characters.map(char => (
-                    <CharacterCard 
-                      key={char.id}
-                      character={char}
-                      onClick={() => setSelectedCharacter(char)}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
+        {phase === 'main' && (
+          <div className={`main-container ${mainVisible ? 'visible' : ''}`}>
+            <header className="site-header">
+              <div className="logo">{CONFIG.siteTitle}</div>
+              <nav className="nav-tabs">
+                <button className={`nav-tab ${activeTab === 'prisoners' ? 'active' : ''}`} onClick={() => setActiveTab('prisoners')}>PRISONERS</button>
+                <button className={`nav-tab ${activeTab === 'rules' ? 'active' : ''}`} onClick={() => setActiveTab('rules')}>RULES</button>
+                <button className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`} onClick={() => setActiveTab('map')}>BERMUDA</button>
+              </nav>
+            </header>
             
-            {activeTab === 'world' && (
-              <>
-                <div className="section-title">GAME RULES</div>
-                <WorldTab />
-              </>
-            )}
+            <main className="content-area">
+              {activeTab === 'prisoners' && (
+                <>
+                  <div className="section-title">PARTICIPANTS ({allPrisoners.length}/10)</div>
+                  <div className="prisoner-grid">
+                    {allPrisoners.map((p, idx) => (
+                      <PrisonerCard 
+                        key={p.number}
+                        prisoner={p}
+                        isUser={p.number === "10"}
+                        onClick={() => setSelectedPrisoner(p)}
+                        isAdmin={isAdmin}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+              
+              {activeTab === 'rules' && (
+                <>
+                  <div className="section-title">GAME RULES</div>
+                  <WorldTab />
+                </>
+              )}
+              
+              {activeTab === 'map' && (
+                <>
+                  <div className="section-title">BERMUDA MAP</div>
+                  <MapTab isAdmin={isAdmin} />
+                </>
+              )}
+            </main>
             
-            {activeTab === 'map' && (
-              <>
-                <div className="section-title">BERMUDA MAP</div>
-                <MapTab />
-              </>
-            )}
-          </main>
-        </div>
+            <AdminToggle isAdmin={isAdmin} onToggle={setIsAdmin} />
+          </div>
+        )}
         
-        {selectedCharacter && (
-          <CharacterModal 
-            character={selectedCharacter}
-            onClose={() => setSelectedCharacter(null)}
+        {selectedPrisoner && (
+          <PrisonerModal 
+            prisoner={selectedPrisoner}
+            isUser={selectedPrisoner.number === "10"}
+            onClose={() => setSelectedPrisoner(null)}
+            isAdmin={isAdmin}
           />
         )}
       </div>
