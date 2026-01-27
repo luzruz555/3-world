@@ -45,7 +45,7 @@ const CONFIG = {
       sentence: "징역 45년",
       ability: "「모방」 - 상대의 능력을 복제",
       selfIntro: "난 누구든 될 수 있어.",
-      adminComment: "지금 그녀의 얼굴조차 누군가의 얼굴일지도?,
+      adminComment: "지금 그녀의 얼굴조차 누군가의 얼굴일지도?",
     },
     {
       id: "P4",
@@ -1558,4 +1558,3 @@ function PrisonerCard({ prisoner, isUser, onClick, isAdmin }) {
         <div className="glitch-comment">⚠ {prisoner.adminComment}</div>
       )}
     </div>
- 
