@@ -51,7 +51,7 @@ const CONFIG = {
       id: "P4",
       number: "04",
       name: "오스워드",
-      alias: "도박사",
+      alias: "gambler",
       crime: "불법 도박장 운영, 살인 교사",
       sentence: "무기징역",
       ability: "「확률」 - 운과 확률을 조작",
@@ -84,34 +84,34 @@ const CONFIG = {
       id: "P7",
       number: "07",
       name: "글로리아",
-      alias: "계약자",
+      alias: "contractor",
       crime: "계약 사기, 배임 (피해액 2조원)",
       sentence: "징역 120년",
       ability: "「구속」 - 상대와 강제 계약을 체결",
       selfIntro: "계약은 지켜져야 해. 그게 세상의 이치니까.",
-      adminComment: "아이러니하게도 그녀의 죄목은 '계약 위반'이라는 거야.",
+      adminComment: "아이러니하게도 그녀의 죄목은 계약 위반이라는 거야.",
     },
     {
       id: "P8",
       number: "08",
       name: "태현",
-      alias: "시계공",
+      alias: "clockmaker",
       crime: "테러 (사상자 89명)",
       sentence: "사형",
       ability: "「시간」 - 자신 주변의 시간을 조작",
       selfIntro: "시간은 모두에게 공평하지 않아. 내가 증명해줄게.",
-      adminComment: "폭발은 그가 원하는 시간에 '정확히' 일어났어.",
+      adminComment: "폭발은 그가 원하는 시간에 정확히 일어났어.",
     },
     {
       id: "P9",
       number: "09",
-      name: "나린",
-      alias: "공명자",
+      name: "서아",
+      alias: "resonance",
       crime: "연쇄 살인 (13건) - 흉기 미발견",
       sentence: "사형",
       ability: "「파동」 - 소리와 진동을 무기화",
       selfIntro: "네 심장 소리가 들려. 점점 빨라지고 있어...",
-      adminComment: "피해자들의 사인은 전원 '내부 장기 파열'",
+      adminComment: "피해자들의 사인은 전원 내부 장기 파열",
     },
   ],
 
@@ -163,7 +163,7 @@ const CONFIG = {
     },
     {
       term: "참가자",
-      definition: "이능력을 가진 수감자 10명. 각자의 죄에 대한 '속죄'의 기회를 부여받는다.",
+      definition: "이능력을 가진 수감자 10명. 각자의 죄에 대한 속죄의 기회를 부여받는다.",
     },
     {
       term: "코인",
@@ -1352,14 +1352,12 @@ const styles = `
 // 컴포넌트
 // ============================================================
 
-// F12 콘솔에 암호화된 비밀번호 출력
 const logEncryptedPassword = () => {
   const encoded = btoa(CONFIG.adminPassword);
   console.log('%c[SYSTEM] ENCRYPTED_KEY: ' + encoded, 'color: #ff3366; font-family: monospace;');
-  console.log('%c해독하려면 atob() 함수를 사용하세요.', 'color: #666; font-size: 10px;');
+  console.log('%cUse atob() to decode.', 'color: #666; font-size: 10px;');
 };
 
-// 인트로
 function IntroScreen({ onComplete }) {
   const [step, setStep] = useState(0);
   
@@ -1380,32 +1378,32 @@ function IntroScreen({ onComplete }) {
     {
       title: "PRISONER'S GAME",
       visual: null,
-      narration: <>당신은 <span className="narration-warning">죄인</span>입니다.<br/>이능력을 가진 <span className="narration-highlight">10명의 수감자</span>가 이 게임에 참가합니다.</>,
+      narration: <span>당신은 <span className="narration-warning">죄인</span>입니다.<br/>이능력을 가진 <span className="narration-highlight">10명의 수감자</span>가 이 게임에 참가합니다.</span>,
     },
     {
       title: "THE DILEMMA",
       visual: { choiceA: 'cooperate', choiceB: 'cooperate', resultA: '+1', resultB: '+1' },
-      narration: <>둘 다 <span className="narration-highlight">협력</span>하면, 서로 코인을 1개씩 얻습니다.</>,
+      narration: <span>둘 다 <span className="narration-highlight">협력</span>하면, 서로 코인을 1개씩 얻습니다.</span>,
     },
     {
       title: "THE DILEMMA",
       visual: { choiceA: 'betray', choiceB: 'cooperate', resultA: '+2', resultB: '-1' },
-      narration: <>한 명만 <span className="narration-warning">배신</span>하면,<br/>배신자는 2개를 얻고, 협력자는 1개를 잃습니다.</>,
+      narration: <span>한 명만 <span className="narration-warning">배신</span>하면,<br/>배신자는 2개를 얻고, 협력자는 1개를 잃습니다.</span>,
     },
     {
       title: "THE PARADOX",
       visual: null,
-      narration: <><span className="narration-highlight">코인이 많을수록 약해지고,</span><br/><span className="narration-warning">코인이 적을수록 강해집니다.</span><br/><br/>생존과 힘은 양립하지 않습니다.</>,
+      narration: <span><span className="narration-highlight">코인이 많을수록 약해지고,</span><br/><span className="narration-warning">코인이 적을수록 강해집니다.</span><br/><br/>생존과 힘은 양립하지 않습니다.</span>,
     },
     {
       title: "THE RULE",
       visual: null,
-      narration: <>최후의 <span className="narration-highlight">1인</span>만이 이 게임에서 해방됩니다.<br/><br/><span className="narration-warning">참가를 거부할 권리는 없습니다.</span></>,
+      narration: <span>최후의 <span className="narration-highlight">1인</span>만이 이 게임에서 해방됩니다.<br/><br/><span className="narration-warning">참가를 거부할 권리는 없습니다.</span></span>,
     },
     {
       title: "AGREEMENT",
       visual: null,
-      narration: <>다음 페이지에서 <span className="narration-highlight">참가 신청서</span>를 작성해주세요.<br/><br/><span className="narration-warning">DON'T LOSE YOURSELF.</span></>,
+      narration: <span>다음 페이지에서 <span className="narration-highlight">참가 신청서</span>를 작성해주세요.<br/><br/><span className="narration-warning">DON'T LOSE YOURSELF.</span></span>,
     },
   ];
 
@@ -1413,7 +1411,7 @@ function IntroScreen({ onComplete }) {
 
   return (
     <div className="intro-container" onClick={handleClick}>
-      <button className="skip-btn" onClick={onComplete}>SKIP →</button>
+      <button className="skip-btn" onClick={onComplete}>SKIP</button>
       
       <div className="intro-scene" key={step}>
         <div className="intro-title">{currentScene.title}</div>
@@ -1422,7 +1420,7 @@ function IntroScreen({ onComplete }) {
           <>
             <div className="intro-visual">
               <div className={`prisoner-box ${currentScene.visual.choiceA === 'cooperate' ? 'highlight' : 'betray'}`}>
-                <div className="prisoner-icon">◈</div>
+                <div className="prisoner-icon">&#9670;</div>
                 <div className="prisoner-label">PRISONER A</div>
                 <div className={`prisoner-choice ${currentScene.visual.choiceA}`}>
                   {currentScene.visual.choiceA === 'cooperate' ? '협력' : '배신'}
@@ -1430,7 +1428,7 @@ function IntroScreen({ onComplete }) {
               </div>
               <div className="vs-text">VS</div>
               <div className={`prisoner-box ${currentScene.visual.choiceB === 'cooperate' ? 'highlight' : 'betray'}`}>
-                <div className="prisoner-icon">◈</div>
+                <div className="prisoner-icon">&#9670;</div>
                 <div className="prisoner-label">PRISONER B</div>
                 <div className={`prisoner-choice ${currentScene.visual.choiceB}`}>
                   {currentScene.visual.choiceB === 'cooperate' ? '협력' : '배신'}
@@ -1463,7 +1461,6 @@ function IntroScreen({ onComplete }) {
   );
 }
 
-// 참가 신청서
 function RegistrationForm({ onSubmit }) {
   const [name, setName] = useState('');
   const [ability, setAbility] = useState('');
@@ -1532,7 +1529,6 @@ function RegistrationForm({ onSubmit }) {
   );
 }
 
-// 참가자 카드
 function PrisonerCard({ prisoner, isUser, onClick, isAdmin }) {
   const imageSrc = prisoner.id ? `${CONFIG.imageBasePath}${prisoner.id}.png` : null;
   
@@ -1549,12 +1545,373 @@ function PrisonerCard({ prisoner, isUser, onClick, isAdmin }) {
         <div className="prisoner-card-info">
           <div className="prisoner-card-number">PRISONER #{prisoner.number}</div>
           <div className="prisoner-card-name">{prisoner.name}</div>
-          <div className="prisoner-card-alias">{prisoner.alias || '별칭 없음'}</div>
+          <div className="prisoner-card-alias">{prisoner.alias || 'unknown'}</div>
           <div className="prisoner-card-crime">{prisoner.crime}</div>
         </div>
       </div>
       <div className="prisoner-card-intro">"{prisoner.selfIntro}"</div>
       {isAdmin && prisoner.adminComment && (
-        <div className="glitch-comment">⚠ {prisoner.adminComment}</div>
+        <div className="glitch-comment">* {prisoner.adminComment}</div>
       )}
     </div>
+  );
+}
+
+function PrisonerModal({ prisoner, isUser, onClose, isAdmin }) {
+  if (!prisoner) return null;
+  
+  const imageSrc = prisoner.id ? `${CONFIG.imageBasePath}${prisoner.id}.png` : null;
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="prisoner-modal" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        
+        <div className="modal-header">
+          <div className="modal-image">
+            {imageSrc && !isUser ? (
+              <img src={imageSrc} alt={prisoner.name} />
+            ) : (
+              <div style={{ fontSize: '48px', color: 'var(--text-dim)', opacity: 0.3 }}>{prisoner.number}</div>
+            )}
+          </div>
+          <div className="modal-info">
+            <div className="modal-number">PRISONER #{prisoner.number}</div>
+            <div className="modal-name">{prisoner.name}</div>
+            <div className="modal-alias">{prisoner.alias || 'unknown'}</div>
+            <div className="modal-crime-box">
+              <div className="modal-crime-label">CRIME</div>
+              <div className="modal-crime-value">{prisoner.crime}</div>
+              {prisoner.sentence && <div className="modal-sentence">형량: {prisoner.sentence}</div>}
+            </div>
+          </div>
+        </div>
+        
+        <div className="modal-body">
+          <div className="modal-section">
+            <div className="modal-section-title">ABILITY</div>
+            <div className="modal-ability">{prisoner.ability}</div>
+          </div>
+          
+          <div className="modal-section">
+            <div className="modal-section-title">SELF INTRODUCTION</div>
+            <div className="modal-intro">"{prisoner.selfIntro}"</div>
+          </div>
+          
+          {isAdmin && prisoner.adminComment && (
+            <div className="modal-glitch">* CLASSIFIED: {prisoner.adminComment}</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ZoneModal({ zone, onClose, isAdmin }) {
+  if (!zone) return null;
+  
+  const zoneLabels = {
+    'zone-center': '0',
+    'zone-alpha': 'α',
+    'zone-beta': 'β',
+    'zone-gamma': 'γ',
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="zone-modal" onClick={e => e.stopPropagation()}>
+        <button className="zone-modal-close" onClick={onClose}>×</button>
+        
+        <div className="zone-modal-header">
+          <div className="zone-modal-symbol">{zoneLabels[zone.id]}</div>
+          <div className="zone-modal-name">{zone.name}</div>
+          <div className="zone-modal-subtitle">{zone.subtitle}</div>
+        </div>
+        
+        <div className="zone-modal-body">
+          <div className="zone-modal-desc">{zone.description}</div>
+          <div className="zone-modal-features">
+            {zone.features.map((f, i) => <span key={i} className="zone-feature">{f}</span>)}
+          </div>
+          {isAdmin && zone.adminComment && (
+            <div className="zone-modal-glitch">* {zone.adminComment}</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WorldTab() {
+  return (
+    <div>
+      <div className="world-section">
+        <div className="world-section-title">GLOSSARY</div>
+        <div className="glossary-grid">
+          {CONFIG.glossary.map((item, idx) => (
+            <div key={idx} className="glossary-item">
+              <div className="glossary-term">{item.term}</div>
+              <div className="glossary-def">{item.definition}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="world-section">
+        <div className="world-section-title">DILEMMA</div>
+        <div className="dilemma-condition">* {CONFIG.rules.dilemma.condition}</div>
+        <div className="dilemma-table-wrapper">
+          <table className="dilemma-table">
+            <thead>
+              <tr><th>A</th><th>B</th><th>A 결과</th><th>B 결과</th></tr>
+            </thead>
+            <tbody>
+              {CONFIG.rules.dilemma.outcomes.map((row, idx) => (
+                <tr key={idx}>
+                  <td style={{ color: row.a === '협력' ? '#00f0ff' : '#ff3366' }}>{row.a}</td>
+                  <td style={{ color: row.b === '협력' ? '#00f0ff' : '#ff3366' }}>{row.b}</td>
+                  <td style={{ color: row.resultA.startsWith('+') ? '#00f0ff' : row.resultA.startsWith('-') ? '#ff3366' : '#666' }}>{row.resultA}</td>
+                  <td style={{ color: row.resultB.startsWith('+') ? '#00f0ff' : row.resultB.startsWith('-') ? '#ff3366' : '#666' }}>{row.resultB}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div className="world-section">
+        <div className="world-section-title">COIN SYSTEM</div>
+        <div className="coin-system">
+          {CONFIG.rules.coinSystem.items.map((item, idx) => (
+            <div key={idx} className="coin-row" style={{ borderLeftColor: item.color }}>
+              <div className="coin-number" style={{ color: item.color }}>{item.coin}</div>
+              <div className="coin-state" style={{ color: item.color }}>{item.state}</div>
+              <div className="coin-power">{item.power}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MapTab({ isAdmin }) {
+  const [selectedZone, setSelectedZone] = useState(null);
+  
+  const points = {
+    top: { x: 200, y: 50 },
+    bottomLeft: { x: 50, y: 350 },
+    bottomRight: { x: 350, y: 350 },
+  };
+  
+  const midpoints = {
+    left: { x: (points.top.x + points.bottomLeft.x) / 2, y: (points.top.y + points.bottomLeft.y) / 2 },
+    right: { x: (points.top.x + points.bottomRight.x) / 2, y: (points.top.y + points.bottomRight.y) / 2 },
+    bottom: { x: (points.bottomLeft.x + points.bottomRight.x) / 2, y: (points.bottomLeft.y + points.bottomRight.y) / 2 },
+  };
+  
+  const center = {
+    x: (points.top.x + points.bottomLeft.x + points.bottomRight.x) / 3,
+    y: (points.top.y + points.bottomLeft.y + points.bottomRight.y) / 3,
+  };
+  
+  const zonePaths = [
+    { id: "zone-center", path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: center.x, y: center.y + 10 }, label: "0", sublabel: "중심" },
+    { id: "zone-alpha", path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`, labelPos: { x: points.top.x, y: points.top.y + 70 }, label: "α", sublabel: "잔해" },
+    { id: "zone-beta", path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 50 }, label: "β", sublabel: "안개" },
+    { id: "zone-gamma", path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 50 }, label: "γ", sublabel: "함정" },
+  ];
+
+  return (
+    <div className="map-container">
+      <div className="map-visual">
+        <svg viewBox="0 0 400 400">
+          <path className="map-outline" d={`M ${points.top.x} ${points.top.y} L ${points.bottomLeft.x} ${points.bottomLeft.y} L ${points.bottomRight.x} ${points.bottomRight.y} Z`} />
+          
+          {zonePaths.map((zoneData) => {
+            const zone = CONFIG.bermudaZones.find(z => z.id === zoneData.id);
+            if (!zone) return null;
+            return (
+              <g key={zone.id} onClick={() => setSelectedZone(zone)} style={{ cursor: 'pointer' }}>
+                <path className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`} d={zoneData.path} style={{ fill: `${zone.color}44` }} />
+                <text className="zone-label" x={zoneData.labelPos.x} y={zoneData.labelPos.y}>{zoneData.label}</text>
+                <text className="zone-sublabel" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 16}>{zoneData.sublabel}</text>
+              </g>
+            );
+          })}
+          
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.right.x} y2={midpoints.right.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+          <line x1={midpoints.right.x} y1={midpoints.right.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+        </svg>
+      </div>
+      
+      {selectedZone && <ZoneModal zone={selectedZone} onClose={() => setSelectedZone(null)} isAdmin={isAdmin} />}
+    </div>
+  );
+}
+
+function AdminToggle({ isAdmin, onToggle }) {
+  const [showModal, setShowModal] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = () => {
+    if (password === CONFIG.adminPassword) {
+      onToggle(true);
+      setShowModal(false);
+      setError('');
+    } else {
+      setError('ACCESS DENIED');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') handleSubmit();
+  };
+
+  return (
+    <div className="admin-toggle">
+      {showModal && !isAdmin && (
+        <div className="admin-modal">
+          <div className="admin-modal-title">ADMIN ACCESS</div>
+          <input 
+            className="admin-input"
+            type="password"
+            placeholder="PASSWORD"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
+            autoFocus
+          />
+          {error && <div className="admin-error">{error}</div>}
+        </div>
+      )}
+      {isAdmin && showModal && (
+        <div className="admin-modal">
+          <div className="admin-success">ADMIN MODE ACTIVE</div>
+        </div>
+      )}
+      <button 
+        className={`admin-btn ${isAdmin ? 'active' : ''}`}
+        onClick={() => {
+          if (isAdmin) {
+            onToggle(false);
+            setShowModal(false);
+          } else {
+            setShowModal(!showModal);
+          }
+        }}
+      >
+        &#9881;
+      </button>
+    </div>
+  );
+}
+
+export default function App() {
+  const [phase, setPhase] = useState('intro');
+  const [userData, setUserData] = useState(null);
+  const [activeTab, setActiveTab] = useState('prisoners');
+  const [selectedPrisoner, setSelectedPrisoner] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [mainVisible, setMainVisible] = useState(false);
+
+  const handleRegistration = (data) => {
+    setUserData(data);
+    setPhase('main');
+    setTimeout(() => setMainVisible(true), 100);
+  };
+
+  const allPrisoners = [
+    ...CONFIG.prisoners,
+    userData ? {
+      id: null,
+      number: "10",
+      name: userData.name,
+      alias: null,
+      crime: "미확정",
+      sentence: "미확정",
+      ability: userData.ability,
+      selfIntro: userData.intro,
+      adminComment: "새로운 참가자. 아직 아무것도 증명되지 않았다.",
+    } : null,
+  ].filter(Boolean);
+
+  return (
+    <>
+      <style>{styles}</style>
+      <div className="scanlines">
+        {phase === 'intro' && <IntroScreen onComplete={() => setPhase('registration')} />}
+        {phase === 'registration' && <RegistrationForm onSubmit={handleRegistration} />}
+        
+        {phase === 'main' && (
+          <div className={`main-container ${mainVisible ? 'visible' : ''}`}>
+            <header className="site-header">
+              <div className="logo">{CONFIG.siteTitle}</div>
+              <nav className="nav-tabs">
+                <button className={`nav-tab ${activeTab === 'prisoners' ? 'active' : ''}`} onClick={() => setActiveTab('prisoners')}>PRISONERS</button>
+                <button className={`nav-tab ${activeTab === 'rules' ? 'active' : ''}`} onClick={() => setActiveTab('rules')}>RULES</button>
+                <button className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`} onClick={() => setActiveTab('map')}>BERMUDA</button>
+              </nav>
+            </header>
+            
+            <main className="content-area">
+              {activeTab === 'prisoners' && (
+                <>
+                  <div className="section-title">PARTICIPANTS ({allPrisoners.length}/10)</div>
+                  <div className="prisoner-grid">
+                    {allPrisoners.map((p) => (
+                      <PrisonerCard 
+                        key={p.number}
+                        prisoner={p}
+                        isUser={p.number === "10"}
+                        onClick={() => setSelectedPrisoner(p)}
+                        isAdmin={isAdmin}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+              
+              {activeTab === 'rules' && (
+                <>
+                  <div className="section-title">GAME RULES</div>
+                  <WorldTab />
+                </>
+              )}
+              
+              {activeTab === 'map' && (
+                <>
+                  <div className="section-title">BERMUDA MAP</div>
+                  <MapTab isAdmin={isAdmin} />
+                </>
+              )}
+            </main>
+            
+            <AdminToggle isAdmin={isAdmin} onToggle={setIsAdmin} />
+          </div>
+        )}
+        
+        {selectedPrisoner && (
+          <PrisonerModal 
+            prisoner={selectedPrisoner}
+            isUser={selectedPrisoner.number === "10"}
+            onClose={() => setSelectedPrisoner(null)}
+            isAdmin={isAdmin}
+          />
+        )}
+      </div>
+    </>
+  );
+}
