@@ -8,7 +8,7 @@ const CONFIG = {
   siteTitle: "III",
   siteSubtitle: "PRISONER'S GAME",
   
-  adminPassword: "TRIOS",
+  adminPassword: "S3CR3T",
   
   imageBasePath: "/img/",
   
