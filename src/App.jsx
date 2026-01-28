@@ -572,6 +572,125 @@ const styles = `
     cursor: not-allowed;
   }
 
+  .terms-link {
+    display: block;
+    margin-top: 12px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .terms-link:hover {
+    color: var(--text);
+    text-shadow: 0 0 10px var(--primary);
+  }
+
+  /* 약관 모달 */
+  .terms-modal {
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #0a0a12 0%, #101018 50%, #0a0a12 100%);
+    border: 1px solid rgba(0,240,255,0.3);
+    position: relative;
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+  }
+
+  .terms-modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+
+  .terms-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid rgba(0,240,255,0.1);
+    text-align: center;
+  }
+
+  .terms-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+
+  .terms-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .terms-doc-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    opacity: 0.6;
+  }
+
+  .terms-content {
+    padding: 24px 32px;
+  }
+
+  .terms-section {
+    margin-bottom: 24px;
+  }
+
+  .terms-section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,240,255,0.1);
+  }
+
+  .terms-section p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .terms-note {
+    font-size: 11px !important;
+    color: var(--text-dim) !important;
+    font-style: italic;
+    margin-top: 8px !important;
+    padding-left: 12px;
+    border-left: 2px solid rgba(0,240,255,0.2);
+  }
+
+  .terms-note-dim {
+    opacity: 0.5;
+  }
+
+  .terms-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,240,255,0.1);
+    text-align: right;
+  }
+
+  .terms-footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
   /* 메인 */
   .main-container {
     min-height: 100vh;
@@ -1569,10 +1688,108 @@ function IntroScreen({ onComplete }) {
   );
 }
 
+function TermsModal({ onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="terms-modal" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        
+        <div className="terms-header">
+          <div className="terms-title">참가 동의서</div>
+          <div className="terms-subtitle">PARTICIPATION AGREEMENT</div>
+          <div className="terms-doc-number">문서번호: III-REG-223-322-351-423-3110-822</div>
+        </div>
+        
+        <div className="terms-content">
+          <div className="terms-section">
+            <div className="terms-section-title">제1조 (목적)</div>
+            <p>본 동의서는 「III」(이하 "게임")에 참가하는 자(이하 "참가자")의 권리와 의무를 명시합니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제2조 (참가 자격)</div>
+            <p>1. 참가자는 이능력 보유가 확인된 수감자로서, 관리위원회의 심사를 통과한 자에 한합니다.</p>
+            <p>2. 참가S자는 본 동의서에 서명함으로써 자신의 죄를 인지하고 있음을 확인합니다.</p>
+            <p>3. 심사 기준은 공개되지 않습니다. 하지만 걱정하지 마세요. 이 문서를 읽고 있다면, 이미 통과한 것입니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제3조 (게임 규칙)</div>
+            <p>1. 참가자는 게임 시작 시 3개의 코인을 부여받습니다.</p>
+            <p>2. 코3인이 0개가 되면 게임에서 제외됩니다.</p>
+            <p>3. 코인 4개 미만의 참가자는 주기적으로 "딜레마"에 참여합니다.</p>
+            <p>4. 협력과 배신, 두 가지 선택지가 주어지며 결과는 양측의 선택에 따라 결정됩니다.</p>
+            <p>5. COIN이 많을수록 이능력이 약화되고, 적을수록 강화됩니다.</p>
+            <p>6. 최후의 1인이 남을 때까지 게임은 계속됩니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제4조 (권리 포기)</div>
+            <p>참가자는 다음의 권리를 포기합니다:</p>
+            <p>1. 게임 도중 참가를 철회할 권리</p>
+            <p>2. 게임R 방식에 이의를 제기할 권리</p>
+            <p>3. 다른 참가자로 인한 피해에 대해 보상을 요구할 권리</p>
+            <p>4. 게임 종료 전 버뮤다 구역을 이탈할 권리</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제5조 (면책)</div>
+            <p>1. 게임 중 발생하는 모든 결과는 참가자 본인에게 귀속됩니다.</p>
+            <p>2. 관리위원회는 참가자 간의 충돌, 부상, 사망에 대해 책임지지 않습니다.</p>
+            <p>3. "게임에서 제외"의 구체적인 의미에 대한 문의는 받지 않습니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제6조 (정보 제공)</div>
+            <p>1. 참가자는 다른 참가자의 정보(이름, 별칭, 죄목, 이능력)를 열람할 수 있습니다.</p>
+            <p>2. 제공된 정보의 정확성은 보장되지 않습니다.</p>
+            <p>3. 참가자 본인의 정보도 동일한 조건으로 공개됩니다.</p>
+            <p className="terms-note">* 지금까지 정보가 부정확했던 사례는 총 3건입니다. 해당 참가자들은 현재 게임에 참가하고 있지 않습니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제7조 (기록)</div>
+            <p>1. 게임의 모든 과정은 기록됩니다.</p>
+            <p>2. 최종 생존자 외의 참가자에 대한 기록은 게임 종료 후 폐기됩니다.</p>
+            <p>3. 폐기된 기록에 대한 열람 요청은 받지 않습니다.</p>
+            <p className="terms-note">* 참고: 본 게임의 이전 시행 횟수는 공개되지 않습니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제8조 (최종 조항)</div>
+            <p>1. 관리위원회는 게임의 원활한 진행을 위해 규칙을 수정할 권한을 가집니다.</p>
+            <p>2. 규T칙 수정은 사전 고지 없이 이루어질 수 있습니다.</p>
+            <p>3. 최종 생존자에게는 "해방"이 주어집니다.</p>
+            <p className="terms-note">* 해방의 정의는 최종 생존자에게 직접 전달됩니다.</p>
+          </div>
+
+          <div className="terms-section">
+            <div className="terms-section-title">제9조 (동의)</div>
+            <p>본 동의서의 "제출" 버튼을 누르는 것은 위 모든 조항에 동의함을 의미합니다.</p>
+            <p>동의 후에는 철회가 불가능합니다.</p>
+            <p className="terms-note">* 동의하지 않으실 경우, 이 페이지를 닫으시면 됩니다.</p>
+            <p className="terms-note terms-note-dim">* 닫으신 분들이 이후 어떻게 되었는지는 저희도 알지 못합니다.</p>
+          </div>
+
+          <div className="terms-footer">
+            <p>— 버뮤다 관리위원회</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RegistrationForm({ onSubmit }) {
   const [name, setName] = useState('');
   const [ability, setAbility] = useState('');
   const [intro, setIntro] = useState('');
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1627,12 +1844,17 @@ function RegistrationForm({ onSubmit }) {
           <div className="registration-warning">
             ※ 경고: 본 신청서 제출 시 게임 참가에 동의한 것으로 간주됩니다.<br/>
             참가 철회는 불가능하며, 모든 결과는 본인에게 귀속됩니다.
+            <button type="button" className="terms-link" onClick={() => setShowTerms(true)}>
+              약관 자세히 보기 →
+            </button>
           </div>
           <button type="submit" className="registration-submit" disabled={!isValid}>
             참가 동의 및 제출
           </button>
         </div>
       </form>
+      
+      {showTerms && <TermsModal onClose={() => setShowTerms(false)} />}
     </div>
   );
 }
