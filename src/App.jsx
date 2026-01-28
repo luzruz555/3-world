@@ -67,7 +67,7 @@ const CONFIG = {
       sentence: "사형",
       ability: "「조종」 - 보이지 않는 실로 대상을 지배",
       selfIntro: "사람은 원래 조종당하고 싶어해요. 전 그걸 조금 도와준 것 뿐인걸요.",
-      adminComment: "피해자들은 구출 후에도 그녀를 찾아 돌아왔어. 능력이 풀였음에도 불구하고.",
+      adminComment: "피해자들은 구출 후에도 그녀를 찾아 돌아왔어. 능력이 풀렸음에도 불구하고.",
     },
     {
       id: "P6",
@@ -867,7 +867,7 @@ const styles = `
     100% { text-shadow: 2px 0 var(--secondary), -2px 0 var(--primary); }
   }
 
-  /* 참가자 상세 모달 */
+  /* 참가자 상세 모달 - 더 크게 */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -883,30 +883,31 @@ const styles = `
 
   .prisoner-modal {
     width: 100%;
-    max-width: 600px;
-    max-height: 90vh;
+    max-width: 800px;
+    max-height: 95vh;
     overflow-y: auto;
     background: linear-gradient(135deg, #0d0d15 0%, #151520 50%, #0d0d15 100%);
     border: 1px solid var(--primary);
     position: relative;
+    box-shadow: 0 0 80px rgba(0,240,255,0.3);
   }
 
   .prisoner-modal::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
   }
 
   .modal-close {
     position: absolute;
-    top: 16px; right: 16px;
-    width: 40px; height: 40px;
-    background: rgba(0,0,0,0.5);
+    top: 20px; right: 20px;
+    width: 48px; height: 48px;
+    background: rgba(0,0,0,0.7);
     border: 1px solid var(--text-dim);
     color: var(--text);
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -918,31 +919,40 @@ const styles = `
   .modal-close:hover {
     border-color: var(--secondary);
     color: var(--secondary);
+    background: rgba(255,51,102,0.2);
   }
 
   .modal-header {
     display: flex;
-    gap: 20px;
-    padding: 24px;
+    gap: 32px;
+    padding: 40px;
     border-bottom: 1px solid rgba(0,240,255,0.1);
   }
 
   .modal-image {
-    width: 140px;
-    height: 180px;
+    width: 200px;
+    height: 260px;
     background: var(--surface-light);
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     overflow: hidden;
+    box-shadow: 0 0 40px rgba(0,240,255,0.2);
   }
 
   .modal-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .modal-image-placeholder {
+    font-family: 'Orbitron', monospace;
+    font-size: 72px;
+    color: var(--text-dim);
+    opacity: 0.3;
   }
 
   .modal-info {
@@ -954,96 +964,99 @@ const styles = `
 
   .modal-number {
     font-family: 'Orbitron', monospace;
-    font-size: 12px;
-    letter-spacing: 4px;
+    font-size: 14px;
+    letter-spacing: 6px;
     color: var(--primary);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px var(--primary);
   }
 
   .modal-name {
-    font-size: 28px;
+    font-size: 42px;
     font-weight: 900;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
   }
 
   .modal-alias {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 18px;
     color: var(--text-dim);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .modal-crime-box {
-    padding: 12px 16px;
+    padding: 20px 24px;
     background: rgba(255,51,102,0.1);
     border: 1px solid rgba(255,51,102,0.3);
+    border-left: 4px solid var(--secondary);
   }
 
   .modal-crime-label {
     font-family: 'Orbitron', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
+    font-size: 10px;
+    letter-spacing: 3px;
     color: var(--text-dim);
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 
   .modal-crime-value {
-    font-size: 14px;
+    font-size: 18px;
     color: var(--secondary);
     font-weight: 700;
   }
 
   .modal-sentence {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--text-dim);
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   .modal-body {
-    padding: 24px;
+    padding: 40px;
   }
 
   .modal-section {
-    margin-bottom: 20px;
+    margin-bottom: 32px;
   }
 
   .modal-section-title {
     font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
+    font-size: 12px;
+    letter-spacing: 4px;
     color: var(--text-dim);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     border-bottom: 1px solid rgba(0,240,255,0.1);
   }
 
   .modal-ability {
-    padding: 16px;
+    padding: 24px;
     background: rgba(0,240,255,0.03);
-    border-left: 3px solid var(--primary);
-    font-size: 14px;
-    line-height: 1.6;
+    border-left: 4px solid var(--primary);
+    font-size: 18px;
+    line-height: 1.7;
   }
 
   .modal-intro {
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 20px;
+    line-height: 1.9;
     font-style: italic;
     color: var(--text);
-    padding: 16px;
+    padding: 24px;
     background: rgba(255,255,255,0.02);
-    border-left: 3px solid var(--text-dim);
+    border-left: 4px solid var(--text-dim);
   }
 
   .modal-glitch {
-    padding: 16px;
+    padding: 20px 24px;
     background: rgba(255,51,102,0.1);
     border: 1px solid rgba(255,51,102,0.3);
-    font-size: 13px;
+    font-size: 16px;
     color: var(--secondary);
     font-family: 'JetBrains Mono', monospace;
     animation: glitchText 0.1s infinite;
-    margin-top: 20px;
+    margin-top: 24px;
   }
 
   /* 세계관 탭 */
@@ -1160,7 +1173,7 @@ const styles = `
     color: var(--text-dim);
   }
 
-  /* 지도 */
+  /* 지도 - 직관적 UI */
   .map-container {
     display: flex;
     flex-direction: column;
@@ -1168,10 +1181,33 @@ const styles = `
     gap: 24px;
   }
 
+  .map-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(0,240,255,0.1);
+    border: 1px solid rgba(0,240,255,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--primary);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .map-hint-icon {
+    font-size: 16px;
+  }
+
   .map-visual {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     aspect-ratio: 1;
+    position: relative;
   }
 
   .map-visual svg {
@@ -1188,26 +1224,28 @@ const styles = `
 
   .zone-cell {
     fill: rgba(0,240,255,0.05);
-    stroke: rgba(0,240,255,0.2);
-    stroke-width: 1;
+    stroke: rgba(0,240,255,0.3);
+    stroke-width: 1.5;
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
   .zone-cell:hover {
-    fill: rgba(0,240,255,0.15);
-    stroke: var(--primary);
-  }
-
-  .zone-cell.active {
     fill: rgba(0,240,255,0.2);
     stroke: var(--primary);
     stroke-width: 2;
+    filter: drop-shadow(0 0 15px rgba(0,240,255,0.5));
+  }
+
+  .zone-cell.active {
+    fill: rgba(0,240,255,0.25);
+    stroke: var(--primary);
+    stroke-width: 2.5;
   }
 
   .zone-label {
     font-family: 'Orbitron', monospace;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
     fill: var(--text);
     text-anchor: middle;
@@ -1216,10 +1254,55 @@ const styles = `
 
   .zone-sublabel {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     fill: var(--text-dim);
     text-anchor: middle;
     pointer-events: none;
+  }
+
+  .zone-click-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    fill: var(--primary);
+    text-anchor: middle;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid rgba(0,240,255,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .legend-item:hover {
+    border-color: var(--primary);
+    background: var(--surface-light);
+  }
+
+  .legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+  }
+
+  .legend-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
   }
 
   /* 구역 모달 */
@@ -1331,6 +1414,26 @@ const styles = `
       flex-direction: column;
       align-items: center;
       text-align: center;
+      padding: 24px;
+    }
+
+    .modal-image {
+      width: 160px;
+      height: 200px;
+    }
+
+    .modal-name {
+      font-size: 28px;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-ability,
+    .modal-intro {
+      font-size: 15px;
+      padding: 16px;
     }
     
     .prisoner-grid {
@@ -1344,6 +1447,11 @@ const styles = `
     
     .vs-text {
       margin: 10px 0;
+    }
+
+    .map-legend {
+      flex-direction: column;
+      align-items: stretch;
     }
   }
 `;
@@ -1420,7 +1528,7 @@ function IntroScreen({ onComplete }) {
           <>
             <div className="intro-visual">
               <div className={`prisoner-box ${currentScene.visual.choiceA === 'cooperate' ? 'highlight' : 'betray'}`}>
-                <div className="prisoner-icon">&#9670;</div>
+                <div className="prisoner-icon">◈</div>
                 <div className="prisoner-label">PRISONER A</div>
                 <div className={`prisoner-choice ${currentScene.visual.choiceA}`}>
                   {currentScene.visual.choiceA === 'cooperate' ? '협력' : '배신'}
@@ -1428,7 +1536,7 @@ function IntroScreen({ onComplete }) {
               </div>
               <div className="vs-text">VS</div>
               <div className={`prisoner-box ${currentScene.visual.choiceB === 'cooperate' ? 'highlight' : 'betray'}`}>
-                <div className="prisoner-icon">&#9670;</div>
+                <div className="prisoner-icon">◈</div>
                 <div className="prisoner-label">PRISONER B</div>
                 <div className={`prisoner-choice ${currentScene.visual.choiceB}`}>
                   {currentScene.visual.choiceB === 'cooperate' ? '협력' : '배신'}
@@ -1551,7 +1659,7 @@ function PrisonerCard({ prisoner, isUser, onClick, isAdmin }) {
       </div>
       <div className="prisoner-card-intro">"{prisoner.selfIntro}"</div>
       {isAdmin && prisoner.adminComment && (
-        <div className="glitch-comment">* {prisoner.adminComment}</div>
+        <div className="glitch-comment">⚠ {prisoner.adminComment}</div>
       )}
     </div>
   );
@@ -1577,7 +1685,7 @@ function PrisonerModal({ prisoner, isUser, onClose, isAdmin }) {
             {imageSrc && !isUser ? (
               <img src={imageSrc} alt={prisoner.name} />
             ) : (
-              <div style={{ fontSize: '48px', color: 'var(--text-dim)', opacity: 0.3 }}>{prisoner.number}</div>
+              <div className="modal-image-placeholder">{prisoner.number}</div>
             )}
           </div>
           <div className="modal-info">
@@ -1604,7 +1712,7 @@ function PrisonerModal({ prisoner, isUser, onClose, isAdmin }) {
           </div>
           
           {isAdmin && prisoner.adminComment && (
-            <div className="modal-glitch">* CLASSIFIED: {prisoner.adminComment}</div>
+            <div className="modal-glitch">⚠ CLASSIFIED: {prisoner.adminComment}</div>
           )}
         </div>
       </div>
@@ -1644,7 +1752,7 @@ function ZoneModal({ zone, onClose, isAdmin }) {
             {zone.features.map((f, i) => <span key={i} className="zone-feature">{f}</span>)}
           </div>
           {isAdmin && zone.adminComment && (
-            <div className="zone-modal-glitch">* {zone.adminComment}</div>
+            <div className="zone-modal-glitch">⚠ {zone.adminComment}</div>
           )}
         </div>
       </div>
@@ -1669,7 +1777,7 @@ function WorldTab() {
       
       <div className="world-section">
         <div className="world-section-title">DILEMMA</div>
-        <div className="dilemma-condition">* {CONFIG.rules.dilemma.condition}</div>
+        <div className="dilemma-condition">※ {CONFIG.rules.dilemma.condition}</div>
         <div className="dilemma-table-wrapper">
           <table className="dilemma-table">
             <thead>
@@ -1726,14 +1834,19 @@ function MapTab({ isAdmin }) {
   };
   
   const zonePaths = [
-    { id: "zone-center", path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: center.x, y: center.y + 10 }, label: "0", sublabel: "중심" },
-    { id: "zone-alpha", path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`, labelPos: { x: points.top.x, y: points.top.y + 70 }, label: "α", sublabel: "잔해" },
-    { id: "zone-beta", path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 50 }, label: "β", sublabel: "안개" },
-    { id: "zone-gamma", path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 50 }, label: "γ", sublabel: "함정" },
+    { id: "zone-center", path: `M ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: center.x, y: center.y + 5 }, label: "0", sublabel: "중심" },
+    { id: "zone-alpha", path: `M ${points.top.x} ${points.top.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.right.x} ${midpoints.right.y} Z`, labelPos: { x: points.top.x, y: points.top.y + 65 }, label: "α", sublabel: "잔해" },
+    { id: "zone-beta", path: `M ${points.bottomLeft.x} ${points.bottomLeft.y} L ${midpoints.left.x} ${midpoints.left.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomLeft.x + 55, y: points.bottomLeft.y - 55 }, label: "β", sublabel: "안개" },
+    { id: "zone-gamma", path: `M ${points.bottomRight.x} ${points.bottomRight.y} L ${midpoints.right.x} ${midpoints.right.y} L ${midpoints.bottom.x} ${midpoints.bottom.y} Z`, labelPos: { x: points.bottomRight.x - 55, y: points.bottomRight.y - 55 }, label: "γ", sublabel: "함정" },
   ];
 
   return (
     <div className="map-container">
+      <div className="map-hint">
+        <span className="map-hint-icon">👆</span>
+        <span>구역을 클릭하면 상세 정보를 확인할 수 있습니다</span>
+      </div>
+      
       <div className="map-visual">
         <svg viewBox="0 0 400 400">
           <path className="map-outline" d={`M ${points.top.x} ${points.top.y} L ${points.bottomLeft.x} ${points.bottomLeft.y} L ${points.bottomRight.x} ${points.bottomRight.y} Z`} />
@@ -1743,17 +1856,30 @@ function MapTab({ isAdmin }) {
             if (!zone) return null;
             return (
               <g key={zone.id} onClick={() => setSelectedZone(zone)} style={{ cursor: 'pointer' }}>
-                <path className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`} d={zoneData.path} style={{ fill: `${zone.color}44` }} />
+                <path className={`zone-cell ${selectedZone?.id === zone.id ? 'active' : ''}`} d={zoneData.path} style={{ fill: `${zone.color}55` }} />
                 <text className="zone-label" x={zoneData.labelPos.x} y={zoneData.labelPos.y}>{zoneData.label}</text>
-                <text className="zone-sublabel" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 16}>{zoneData.sublabel}</text>
+                <text className="zone-sublabel" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 18}>{zoneData.sublabel}</text>
+                <text className="zone-click-hint" x={zoneData.labelPos.x} y={zoneData.labelPos.y + 32}>CLICK</text>
               </g>
             );
           })}
           
-          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.right.x} y2={midpoints.right.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
-          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
-          <line x1={midpoints.right.x} y1={midpoints.right.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.3)" strokeWidth="1" />
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.right.x} y2={midpoints.right.y} stroke="rgba(0,240,255,0.4)" strokeWidth="1" />
+          <line x1={midpoints.left.x} y1={midpoints.left.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.4)" strokeWidth="1" />
+          <line x1={midpoints.right.x} y1={midpoints.right.y} x2={midpoints.bottom.x} y2={midpoints.bottom.y} stroke="rgba(0,240,255,0.4)" strokeWidth="1" />
         </svg>
+      </div>
+
+      <div className="map-legend">
+        {CONFIG.bermudaZones.map((zone) => {
+          const labels = { 'zone-center': '0', 'zone-alpha': 'α', 'zone-beta': 'β', 'zone-gamma': 'γ' };
+          return (
+            <div key={zone.id} className="legend-item" onClick={() => setSelectedZone(zone)}>
+              <div className="legend-color" style={{ background: zone.color }}></div>
+              <div className="legend-text">{labels[zone.id]} {zone.subtitle}</div>
+            </div>
+          );
+        })}
       </div>
       
       {selectedZone && <ZoneModal zone={selectedZone} onClose={() => setSelectedZone(null)} isAdmin={isAdmin} />}
@@ -1813,7 +1939,7 @@ function AdminToggle({ isAdmin, onToggle }) {
           }
         }}
       >
-        &#9881;
+        ⚙
       </button>
     </div>
   );
