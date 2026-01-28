@@ -111,7 +111,7 @@ const CONFIG = {
       sentence: "사형",
       ability: "「파동」 - 소리와 진동을 무기화",
       selfIntro: "네 심장 소리가 들려. 점점 빨라지고 있어...",
-      adminComment: "피해자들의 사인은 전원 내부 장기 파열",
+      adminComment: "피해자들의 사인은 전원 내부 장기 파열이야.",
     },
   ],
 
@@ -2192,7 +2192,7 @@ export default function App() {
       sentence: "미확정",
       ability: userData.ability,
       selfIntro: userData.intro,
-      adminComment: "새로운 참가자. 아직 아무것도 증명되지 않았다.",
+      adminComment: "새로운 참가자. 주시해야 해.",
     } : null,
   ].filter(Boolean);
 
